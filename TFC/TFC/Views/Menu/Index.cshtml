@@ -1,0 +1,90 @@
+﻿<link rel="stylesheet" href="~/css/menu.css" />
+@{
+    ViewData["Title"] = "Index";
+}
+@model List<Category>
+
+<!-- Navigation Categories -->
+<nav class="nav-menu">
+    <div class="nav-content">
+        @foreach (var category in Model)
+        {
+            <a href="#category-@category.Id" class="nav-item">@category.Name</a>
+        }
+    </div>
+</nav>
+
+@foreach (var category in Model)
+{
+    <section id="category-@category.Id" class="category-section">
+        <h2 class="section-title">@category.Name</h2>
+        <div class="category-content">
+            @if (category.Products != null && category.Products.Any())
+            {
+                <ul class="product-list">
+                    @foreach (var product in category.Products)
+                    {
+                        <li class="product-item">
+                            <img src="@product.ImageUrl" alt="@product.Name" class="product-image" />
+                            <div class="product-info">
+                                <div class="product-header">
+                                    <span class="product-name">@product.Name</span>
+                                    <span class="product-price">@product.Price.ToString("N0") đ</span>
+                                </div>
+                                <span class="product-descript">@product.Description</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-primary">Thêm</button>
+                            </div>
+                        </li>
+
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="no-products">No products available in this category.</p>
+            }
+        </div>
+    </section>
+}
+<script>
+    // Auto-set active nav item based on scroll position
+    window.addEventListener('scroll', function () {
+        const sections = document.querySelectorAll('.category-section');
+        const navItems = document.querySelectorAll('.nav-item');
+
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 120;
+            if (scrollY >= sectionTop) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navItems.forEach(item => {
+            item.classList.remove('active');
+            if (item.getAttribute('href') === '#' + current) {
+                item.classList.add('active');
+            }
+        });
+    });
+
+    // Smooth scroll to section on nav click
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', function (e) {
+            e.preventDefault(); // Ngăn mặc định
+            const targetId = this.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+            }
+        });
+    });
+</script>
