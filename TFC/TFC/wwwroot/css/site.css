@@ -1,0 +1,164 @@
+
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Button focus style */
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+/* Header (Navbar) */
+header {
+    display: flex;
+    align-items: center;
+    padding: 20px 60px;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 22px;
+    letter-spacing: 1px;
+}
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+
+.hero {
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    padding: 120px 20px 20px;
+    z-index: 1;
+    background-image: url('../Content/Bg0.jpg');
+    background-size: cover;
+    background-position: bottom;
+    height: 100vh;
+}
+
+
+    .hero h1 {
+        font-size: 48px;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
+    .hero p {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .hero a {
+        border: 2px solid white;
+        padding: 10px 30px;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.3s;
+    }
+
+        .hero a:hover {
+            background-color: white;
+            color: black;
+        }
+
+/* Background slideshow */
+/*.slideshow-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    animation: fade 15s infinite;
+}
+
+    .slide:nth-child(1) {
+        animation-delay: 0s;
+    }
+
+    .slide:nth-child(2) {
+        animation-delay: 5s;
+    }
+
+    .slide:nth-child(3) {
+        animation-delay: 10s;
+    }
+
+@keyframes fade {
+    0% {
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    40% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}*/
+
+main {
+    position: relative;
+    z-index: 2;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #f7f7f7;
+    color: #777;
+    font-size: 14px;
+    position: relative;
+    z-index: 2;
+}
