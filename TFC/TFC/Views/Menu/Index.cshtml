@@ -1,20 +1,24 @@
 ﻿<link rel="stylesheet" href="~/css/menu.css" />
 @{
     ViewData["Title"] = "Index";
+    var categories = ViewBag.Categories as List<Category>;
+    var combos = ViewBag.Combos as List<Combo>;
 }
-@model List<Category>
 
 <!-- Navigation Categories -->
 <nav class="nav-menu">
     <div class="nav-content">
-        @foreach (var category in Model)
+        @foreach (var category in categories)
         {
             <a href="#category-@category.Id" class="nav-item">@category.Name</a>
         }
+        <a href="#combo" class="nav-item">Combo</
     </div>
 </nav>
-
-@foreach (var category in Model)
+<div class="promo-banner">
+    <a href="#combo" class="nav-item">🍽️ Ăn no không lo về giá? Thử ngay những combo siêu rẻ!</a>
+</div>
+@foreach (var category in categories)
 {
     <section id="category-@category.Id" class="category-section">
         <h2 class="section-title">@category.Name</h2>
@@ -48,6 +52,38 @@
         </div>
     </section>
 }
+
+<section id="combo" class="category-section">
+    <h2 class="section-title">Combo</h2>
+    <div class="category-content">
+        <ul class="product-list">
+            @foreach(var combo in combos)
+            {
+                @if (combo.Available != null)
+                {
+                        <li class="product-item">
+                            <img src="@combo.ImageUrl" alt="@combo.Name" class="product-image" />
+                            <div class="product-info">
+                                <div class="product-header">
+                                    <span class="product-name">@combo.Name</span>
+                                    <span class="product-price">@combo.Price.ToString("N0") đ</span>
+                                </div>
+                                <span class="product-descript">@combo.Description</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-primary">Thêm</button>
+                            </div>
+                        </li>
+                }
+                else
+                {
+                    <p class="no-products">No Combo available.</p>
+                }
+            }
+        </ul>
+    </div>
+</section>
+
 <script>
     // Auto-set active nav item based on scroll position
     window.addEventListener('scroll', function () {
@@ -73,7 +109,7 @@
     // Smooth scroll to section on nav click
     document.querySelectorAll('.nav-item').forEach(item => {
         item.addEventListener('click', function (e) {
-            e.preventDefault(); // Ngăn mặc định
+            e.preventDefault(); 
             const targetId = this.getAttribute('href').substring(1);
             const targetSection = document.getElementById(targetId);
             if (targetSection) {
