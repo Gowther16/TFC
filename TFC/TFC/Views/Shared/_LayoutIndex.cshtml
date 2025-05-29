@@ -6,25 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="@Url.Content("~/css/site.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/css/Menu.css")" />
 
 </head>
 <body>
 
     <header>
-        <div class="logo">TFC Fast Order</div>
-        <nav>
-            <a href="/">Trang chủ</a>
-            <a href="/Menu">Thực đơn</a>
-            <a href="/Order">Đặt món</a>
-            <a href="/Contact">Liên hệ</a>
+        <div class="logo">TFC FastOrder</div>
+
+        <nav class="main-nav">
+            <a href="/">Home</a>
+            <a href="/Menu">Menu</a>
+            <a href="#" id="cusOrder" >Your Order</a>
+            <a href="/Home/Contact">Contact</a>
         </nav>
+
+        <div class="login-button">
+            <a href="/User/Login">Login</a>
+        </div>
     </header>
+    <!-- Modal tìm kiếm đơn hàng -->
+    <div id="phoneModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Tra cứu đơn hàng</h2>
+            <form id="phoneForm">
+                <div class="form-group">
+                    <label for="phoneNumber">Nhập số điện thoại:</label>
+                    <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="0123456789" required>
+                </div>
+                <button type="submit" class="btn">Tìm đơn hàng</button>
+                <div class="loading">Đang tìm kiếm...</div>
+                <div class="error-message" id="errorMessage"></div>
+            </form>
+
+            <!-- Khu vực hiển thị danh sách đơn hàng -->
+            <div id="ordersContainer" class="orders-list" style="display: none;">
+                <h3 id="customerName"></h3>
+                <div id="ordersList"></div>
+            </div>
+        </div>
+    </div>
     <main>
         @RenderBody()
     </main>
 
     <footer>
-        &copy; @DateTime.Now.Year - FastOrder
+        &copy; @DateTime.Now.Year - TFC FastOrder
     </footer>
+    <script src="~/js/CustomerOrder.js"></script>
 </body>
 </html>

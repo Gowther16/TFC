@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace TFC.Models;
 
@@ -26,8 +25,6 @@ public partial class ModelContext : DbContext
 
     public virtual DbSet<Orderitem> Orderitems { get; set; }
 
-    public virtual DbSet<Ordertable> Ordertables { get; set; }
-
     public virtual DbSet<Product> Products { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
@@ -44,7 +41,7 @@ public partial class ModelContext : DbContext
 
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("SYS_C008615");
+            entity.HasKey(e => e.Id).HasName("SYS_C008655");
 
             entity.ToTable("CATEGORY");
 
@@ -64,7 +61,7 @@ public partial class ModelContext : DbContext
 
         modelBuilder.Entity<Combo>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("SYS_C008624");
+            entity.HasKey(e => e.Id).HasName("SYS_C008664");
 
             entity.ToTable("COMBO");
 
@@ -95,7 +92,7 @@ public partial class ModelContext : DbContext
 
         modelBuilder.Entity<Customer>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("SYS_C008634");
+            entity.HasKey(e => e.Id).HasName("SYS_C008674");
 
             entity.ToTable("CUSTOMER");
 
@@ -123,7 +120,7 @@ public partial class ModelContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("SYS_C008642");
+            entity.HasKey(e => e.Id).HasName("SYS_C008677");
 
             entity.ToTable("Order");
 
@@ -147,9 +144,6 @@ public partial class ModelContext : DbContext
                 .IsUnicode(false)
                 .HasDefaultValueSql("'pending'")
                 .HasColumnName("STATUS");
-            entity.Property(e => e.TableId)
-                .HasColumnType("NUMBER")
-                .HasColumnName("TABLE_ID");
             entity.Property(e => e.TotalAmount)
                 .HasDefaultValueSql("0")
                 .HasColumnType("NUMBER(10,2)")
@@ -162,10 +156,6 @@ public partial class ModelContext : DbContext
                 .HasForeignKey(d => d.CustomerId)
                 .HasConstraintName("FK_ORDER_CUSTOMER");
 
-            entity.HasOne(d => d.Table).WithMany(p => p.Orders)
-                .HasForeignKey(d => d.TableId)
-                .HasConstraintName("FK_ORDER_TABLE");
-
             entity.HasOne(d => d.User).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK_ORDER_USER");
@@ -173,7 +163,7 @@ public partial class ModelContext : DbContext
 
         modelBuilder.Entity<Orderitem>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("SYS_C008649");
+            entity.HasKey(e => e.Id).HasName("SYS_C008683");
 
             entity.ToTable("ORDERITEM");
 
@@ -212,32 +202,9 @@ public partial class ModelContext : DbContext
                 .HasConstraintName("FK_ORDERITEM_PRODUCT");
         });
 
-        modelBuilder.Entity<Ordertable>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("SYS_C008638");
-
-            entity.ToTable("ORDERTABLE");
-
-            entity.HasIndex(e => e.TableNumber, "SYS_C008639").IsUnique();
-
-            entity.Property(e => e.Id)
-                .ValueGeneratedOnAdd()
-                .HasColumnType("NUMBER")
-                .HasColumnName("ID");
-            entity.Property(e => e.Status)
-                .HasMaxLength(20)
-                .IsUnicode(false)
-                .HasDefaultValueSql("'available' ")
-                .HasColumnName("STATUS");
-            entity.Property(e => e.TableNumber)
-                .HasMaxLength(10)
-                .IsUnicode(false)
-                .HasColumnName("TABLE_NUMBER");
-        });
-
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("SYS_C008619");
+            entity.HasKey(e => e.Id).HasName("SYS_C008659");
 
             entity.ToTable("PRODUCT");
 
@@ -275,11 +242,11 @@ public partial class ModelContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("SYS_C008630");
+            entity.HasKey(e => e.Id).HasName("SYS_C008670");
 
             entity.ToTable("User");
 
-            entity.HasIndex(e => e.Username, "SYS_C008631").IsUnique();
+            entity.HasIndex(e => e.Username, "SYS_C008671").IsUnique();
 
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd()

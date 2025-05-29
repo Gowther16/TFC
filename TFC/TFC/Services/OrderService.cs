@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TFC.DTOs;
 using TFC.Models;
+using static TFC.DTOs.FindOrderDTO;
 
 namespace TFC.Services
 {
     public class OrderService : IOrderService
     {
-        private readonly ModelContext _context; 
+        private readonly ModelContext _context;
 
         public OrderService(ModelContext context)
         {
@@ -28,7 +29,7 @@ namespace TFC.Services
                     OrderCode = orderCode,
                     CustomerId = customer.Id,
                     TotalAmount = request.TotalAmount,
-                    Status = "Pending", 
+                    Status = "Pending",
                     CreatedAt = DateTime.Now
                 };
 
@@ -59,7 +60,7 @@ namespace TFC.Services
                         }
 
                         orderItem.ProductId = productId;
-                        orderItem.ComboId = null; 
+                        orderItem.ComboId = null;
                     }
                     else if (item.Type.ToLower() == "combo")
                     {
@@ -72,7 +73,7 @@ namespace TFC.Services
                         }
 
                         orderItem.ComboId = comboId;
-                        orderItem.ProductId = null; 
+                        orderItem.ProductId = null;
                     }
                     else
                     {
@@ -102,6 +103,76 @@ namespace TFC.Services
                 {
                     Success = false,
                     Message = ex.Message
+                };
+            }
+        }
+
+        // Thêm phương thức mới để tìm đơn hàng theo số điện thoại
+        public async Task<GetOrdersByPhoneResult> GetOrdersByPhoneAsync(string phoneNumber)
+        {
+            try
+            {
+                // Tìm customer theo số điện thoại
+                var customer = await _context.Customers
+                    .FirstOrDefaultAsync(c => c.Phone == phoneNumber);
+
+                if (customer == null)
+                {
+                    return new GetOrdersByPhoneResult
+                    {
+                        Success = false,
+                        Message = "Không tìm thấy khách hàng với số điện thoại này"
+                    };
+                }
+
+                // Lấy danh sách đơn hàng của customer
+                var orders = await _context.Orders
+                    .Where(o => o.CustomerId == customer.Id)
+                    .Include(o => o.Orderitems)
+                        .ThenInclude(oi => oi.Product)
+                    .Include(o => o.Orderitems)
+                        .ThenInclude(oi => oi.Combo)
+                    .OrderByDescending(o => o.CreatedAt)
+                    .ToListAsync();
+
+                if (!orders.Any())
+                {
+                    return new GetOrdersByPhoneResult
+                    {
+                        Success = false,
+                        Message = "Không tìm thấy đơn hàng nào"
+                    };
+                }
+
+                var FindOrders = orders.Select(order => new FindOrder
+                {
+                    Id = order.Id,
+                    OrderCode = order.OrderCode,
+                    TotalAmount = (decimal)order.TotalAmount,
+                    Status = order.Status,
+                    CreatedAt = (DateTime)order.CreatedAt,
+                    Items = order.Orderitems.Select(item => new OrderItemDTO
+                    {
+                        Quantity = (decimal)item.Quantity,
+                        UnitPrice = item.UnitPrice,
+                        ProductName = item.Product?.Name,
+                        ComboName = item.Combo?.Name
+                    }).ToList()
+                }).ToList();
+
+                return new GetOrdersByPhoneResult
+                {
+                    Success = true,
+                    Orders = FindOrders,
+                    CustomerName = customer.Name
+                };
+            }
+            catch (Exception ex)
+            {
+                return new GetOrdersByPhoneResult
+                {
+                    Success = false,
+                    Message = "Có lỗi xảy ra khi tìm kiếm đơn hàng"
                 };
             }
         }

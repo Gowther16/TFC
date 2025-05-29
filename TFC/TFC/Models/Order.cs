@@ -9,8 +9,6 @@ public partial class Order
 
     public string OrderCode { get; set; } = null!;
 
-    public decimal? TableId { get; set; }
-
     public decimal? UserId { get; set; }
 
     public decimal? CustomerId { get; set; }
@@ -24,8 +22,6 @@ public partial class Order
     public virtual Customer? Customer { get; set; }
 
     public virtual ICollection<Orderitem> Orderitems { get; set; } = new List<Orderitem>();
-
-    public virtual Ordertable? Table { get; set; }
 
     public virtual User? User { get; set; }
 }

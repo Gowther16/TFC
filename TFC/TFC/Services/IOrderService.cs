@@ -1,10 +1,12 @@
 ﻿using TFC.DTOs;
+using static TFC.DTOs.FindOrderDTO;
 
 namespace TFC.Services
 {
     public interface IOrderService
     {
         Task<CreateOrderResult> CreateOrderAsync(CreateOrderRequest request);
+        Task<GetOrdersByPhoneResult> GetOrdersByPhoneAsync(string phoneNumber);
     }
 
     public class CreateOrderResult

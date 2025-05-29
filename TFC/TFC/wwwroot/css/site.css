@@ -49,6 +49,20 @@ nav a {
     color: #333;
     font-weight: 500;
 }
+.login-button a {
+    padding: 8px 30px;
+    margin-left: 750px;
+    background-color: #ffc115;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+    .login-button a:hover {
+        background-color: #ff9600;
+    }
 
 .hero {
     display: flex;
@@ -90,7 +104,47 @@ nav a {
             background-color: white;
             color: black;
         }
+.contact-hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+}
+/* Contact info styling */
+.contact-info {
+    max-width: 600px;
+    margin: 0 auto;
+}
 
+    .contact-info ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        font-size: 20px;
+    }
+
+    .contact-info li {
+        margin: 15px 0;
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+        .contact-info li:last-child {
+            border-bottom: none;
+        }
+
+    .contact-info a {
+        color: #ffc115;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+        .contact-info a:hover {
+            color: white;
+            background-color: rgba(255, 193, 21, 0.8);
+        }
 main {
     position: relative;
     z-index: 2;
@@ -100,7 +154,7 @@ main {
 footer {
     text-align: center;
     padding: 20px;
-    background-color: #bdbdbd;
+    background-color: #cccccc;
     color: #777;
     font-size: 14px;
     position: relative;

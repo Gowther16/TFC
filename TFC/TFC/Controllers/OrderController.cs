@@ -46,5 +46,42 @@ namespace TFC.Controllers
                 return StatusCode(500, new { success = false, message = "Có lỗi xảy ra khi xử lý đơn hàng" });
             }
         }
+        [HttpPost("GetOrdersByPhone")]
+        public async Task<IActionResult> GetOrdersByPhone([FromBody] GetOrdersByPhoneRequest request)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(request.PhoneNumber))
+                {
+                    return BadRequest(new { success = false, message = "Số điện thoại không được để trống" });
+                }
+
+                var result = await _orderService.GetOrdersByPhoneAsync(request.PhoneNumber);
+
+                if (result.Success)
+                {
+                    return Ok(new
+                    {
+                        success = true,
+                        customerName = result.CustomerName,
+                        orders = result.Orders,
+                        message = $"Tìm thấy {result.Orders.Count} đơn hàng"
+                    });
+                }
+                else
+                {
+                    return NotFound(new { success = false, message = result.Message });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Có lỗi xảy ra khi tìm kiếm đơn hàng" });
+            }
+        }
+    }
+
+    public class GetOrdersByPhoneRequest
+    {
+        public string PhoneNumber { get; set; }
     }
 }
