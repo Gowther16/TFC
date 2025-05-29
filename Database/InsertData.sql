@@ -190,18 +190,6 @@ VALUES ('Combo Nhóm 3 Đủ Đầy', '3 Miếng Gà Rán + 1 Mì Ý Gà Viên +
 INSERT INTO Combo (name, description, price, image_url)
 VALUES ('Combo Nhóm 5 Hội Tụ', '6 Miếng Gà Rán + 1 Mì Ý Gà Viên + 1 Khoai Múi Cau (Vừa) + 5 Ly Pepsi (Tiêu chuẩn) + 8 Gói tương (cà/ ớt)', 309000, 'https://static.kfcvietnam.com.vn/images/items/lg/DBUCKET3.jpg?v=gk7XPg');
 
--- ===== OrderTable =====
-INSERT INTO OrderTable (table_number, status) VALUES ('T01', 'available');
-INSERT INTO OrderTable (table_number, status) VALUES ('T02', 'available');
-INSERT INTO OrderTable (table_number, status) VALUES ('T03', 'available');
-INSERT INTO OrderTable (table_number, status) VALUES ('T04', 'available');
-INSERT INTO OrderTable (table_number, status) VALUES ('T05', 'available');
-INSERT INTO OrderTable (table_number, status) VALUES ('T06', 'available');
-INSERT INTO OrderTable (table_number, status) VALUES ('T07', 'available');
-INSERT INTO OrderTable (table_number, status) VALUES ('T08', 'available');
-INSERT INTO OrderTable (table_number, status) VALUES ('T09', 'available');
-INSERT INTO OrderTable (table_number, status) VALUES ('T10', 'available');
-
 -- ===== User =====
 INSERT INTO "User" (name, username, password_hash, role) VALUES('Administrator','Admin', 'Admin123', 'admin');
 INSERT INTO "User" (name, username, password_hash, role) VALUES('Staff1','Staff1', 'Staff123', 'staff');
