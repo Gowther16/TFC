@@ -190,6 +190,151 @@ VALUES ('Combo Nhóm 3 Đủ Đầy', '3 Miếng Gà Rán + 1 Mì Ý Gà Viên +
 INSERT INTO Combo (name, description, price, image_url)
 VALUES ('Combo Nhóm 5 Hội Tụ', '6 Miếng Gà Rán + 1 Mì Ý Gà Viên + 1 Khoai Múi Cau (Vừa) + 5 Ly Pepsi (Tiêu chuẩn) + 8 Gói tương (cà/ ớt)', 309000, 'https://static.kfcvietnam.com.vn/images/items/lg/DBUCKET3.jpg?v=gk7XPg');
 
+-- ===== COMBO ITEM =====
+
+-- Combo 1: Combo 1 Miếng Gà (combo_id = 1)
+-- 1 Miếng Gà Rán + 1 Khoai Tây Chiên (Vừa) + 1 Pepsi (Tiêu chuẩn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (1, 1, 1);  -- 1 Miếng gà rán
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (1, 26, 1); -- Khoai Tây Chiên (Vừa)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (1, 41, 1); -- Pepsi (Tiêu Chuẩn)
+
+-- Combo 2: Combo 2 Miếng Gà (combo_id = 2)
+-- 2 Miếng Gà Rán + 1 Khoai Tây Chiên (Vừa) + 1 Ly Pepsi (Tiêu chuẩn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (2, 2, 1);  -- 2 Miếng gà rán
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (2, 26, 1); -- Khoai Tây Chiên (Vừa)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (2, 41, 1); -- Pepsi (Tiêu Chuẩn)
+
+-- Combo 3: Combo Gà Rán Tender (combo_id = 3)
+-- 3 Miếng Gà Rán Tenders + 1 Xà lách Hạt + 1 Pepsi Không Đường (Tiêu chuẩn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (3, 11, 1); -- 3 Miếng Gà Rán Tender
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (3, 21, 1); -- Salad Hạt
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (3, 50, 1); -- Pepsi Không Đường (Tiêu Chuẩn)
+
+-- Combo 4: Combo Phi-lê Gà Quay (combo_id = 4)
+-- 1 Miếng Phi-lê Gà Quay + 1 Bắp Cải Trộn (Lớn) + 1 Pepsi Không Đường (Tiêu chuẩn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (4, 5, 1);  -- 1 Miếng Phi-lê Gà Quay
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (4, 33, 1); -- Bắp Cải Trộn (Lớn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (4, 50, 1); -- Pepsi Không Đường (Tiêu Chuẩn)
+
+-- Combo 5: Combo Mì Ý Gà Viên (combo_id = 5)
+-- 1 Mì Ý Gà Viên + 1 Pepsi (Tiêu chuẩn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (5, 18, 1); -- Mì Ý Gà Viên
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (5, 41, 1); -- Pepsi (Tiêu Chuẩn)
+
+-- Combo 6: Combo Mì Ý Gà Rán (combo_id = 6)
+-- 1 Mì Ý Gà Rán + 1 Ly Pepsi (Tiêu chuẩn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (6, 19, 1); -- Mì Ý Gà Rán
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (6, 41, 1); -- Pepsi (Tiêu Chuẩn)
+
+-- Combo 7: Combo Mì Ý và Gà Tender (combo_id = 7)
+-- 1 Mì Ý Gà Viên + 2 Miếng Gà Rán Tenders + 1 Khoai Tây Chiên (Vừa) + 1 Pepsi (Tiêu chuẩn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (7, 18, 1); -- Mì Ý Gà Viên
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (7, 11, 1); -- 3 Miếng Gà Rán Tender (thay thế cho 2 miếng)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (7, 26, 1); -- Khoai Tây Chiên (Vừa)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (7, 41, 1); -- Pepsi (Tiêu Chuẩn)
+
+-- Combo 8: Combo Mì Ý và Salad Gà (combo_id = 8)
+-- 1 Mì Ý Gà Viên + 1 Xà Lách Gà Viên + 1 Pepsi (Tiêu chuẩn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (8, 18, 1); -- Mì Ý Gà Viên
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (8, 22, 1); -- Salad Pop (Xà Lách Gà Viên)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (8, 41, 1); -- Pepsi (Tiêu Chuẩn)
+
+-- Combo 9: Combo Cơm Gà Rán (combo_id = 9)
+-- 1 Cơm Gà Rán + 1 Ly Pepsi (Tiêu chuẩn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (9, 15, 1); -- Cơm Gà Rán
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (9, 41, 1); -- Pepsi (Tiêu Chuẩn)
+
+-- Combo 10: Combo Cơm Gà Quay (combo_id = 10)
+-- 1 Cơm Gà Flava + 1 Ly Pepsi (Tiêu chuẩn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (10, 16, 1); -- Cơm Phi-lê Gà Quay
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (10, 41, 1); -- Pepsi (Tiêu Chuẩn)
+
+-- Combo 11: Combo Cơm Gà Nanban (combo_id = 11)
+-- 1 Cơm Gà Nanban + 1 Ly Pepsi (Tiêu chuẩn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (11, 20, 1); -- Cơm Gà Viên Nanban
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (11, 41, 1); -- Pepsi (Tiêu Chuẩn)
+
+-- Combo 12: Combo Cơm Gà Nanban và Súp Rong Biển (combo_id = 12)
+-- 1 Cơm Gà Nanban + 1 Súp Rong Biển + 1 Ly Pepsi (Tiêu chuẩn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (12, 20, 1); -- Cơm Gà Viên Nanban
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (12, 35, 1); -- Súp Rong Biển
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (12, 41, 1); -- Pepsi (Tiêu Chuẩn)
+
+-- Combo 13: Combo Burger Tôm (combo_id = 13)
+-- 1 Burger Tôm + 1 Ly Pepsi (Tiêu chuẩn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (13, 14, 1); -- Burger Tôm
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (13, 41, 1); -- Pepsi (Tiêu Chuẩn)
+
+-- Combo 14: Combo Burger Gà Zinger và Khoai (combo_id = 14)
+-- 1 Burger Zinger + 1 Khoai Tây Chiên (Vừa) + 1 Ly Pepsi (Tiêu chuẩn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (14, 13, 1); -- Burger Zinger
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (14, 26, 1); -- Khoai Tây Chiên (Vừa)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (14, 41, 1); -- Pepsi (Tiêu Chuẩn)
+
+-- Combo 15: Combo Burger Phi-lê Gà Quay và Khoai (combo_id = 15)
+-- 1 Burger Gà Quay + 1 Khoai Tây Chiên (Vừa) + 1 Ly Pepsi (Tiêu chuẩn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (15, 15, 1); -- Burger Gà Quay Flava
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (15, 26, 1); -- Khoai Tây Chiên (Vừa)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (15, 41, 1); -- Pepsi (Tiêu Chuẩn)
+
+-- Combo 16: Combo Burger Tôm & Gà Rán (combo_id = 16)
+-- 1 Burger Tôm + 1 Miếng Gà Rán + 1 Ly Pepsi (Tiêu chuẩn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (16, 14, 1); -- Burger Tôm
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (16, 1, 1);  -- 1 Miếng gà rán
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (16, 41, 1); -- Pepsi (Tiêu Chuẩn)
+
+-- Combo 17: Combo Burger Phi-lê Gà Quay và Gà Rán (combo_id = 17)
+-- 1 Burger Phi-lê Gà Quay + 1 Miếng Gà Rán + 1 Ly Pepsi (Tiêu chuẩn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (17, 15, 1); -- Burger Gà Quay Flava
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (17, 1, 1);  -- 1 Miếng gà rán
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (17, 41, 1); -- Pepsi (Tiêu Chuẩn)
+
+-- Combo 18: Combo Burger Gà Zinger và Gà Rán (combo_id = 18)
+-- 1 Burger Zinger + 1 Miếng Gà Rán + 1 Ly Pepsi (Tiêu chuẩn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (18, 13, 1); -- Burger Zinger
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (18, 1, 1);  -- 1 Miếng gà rán
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (18, 41, 1); -- Pepsi (Tiêu Chuẩn)
+
+-- Combo 19: Combo Burger và Gà Rán (combo_id = 19)
+-- 1 Burger Gà Quay/Zinger + 1 Khoai Tây Chiên (Vừa) + 1 Miếng Gà Rán + 1 Ly Pepsi (Tiêu chuẩn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (19, 13, 1); -- Burger Zinger (chọn 1 trong 2)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (19, 26, 1); -- Khoai Tây Chiên (Vừa)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (19, 1, 1);  -- 1 Miếng gà rán
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (19, 41, 1); -- Pepsi (Tiêu Chuẩn)
+
+-- Combo 20: Combo Nhóm 2 Hoàn Hảo (combo_id = 20)
+-- 2 Miếng Gà Rán + 1 Burger Zinger + 2 Ly Pepsi (Tiêu chuẩn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (20, 2, 1);  -- 2 Miếng gà rán
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (20, 13, 1); -- Burger Zinger
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (20, 41, 2); -- Pepsi (Tiêu Chuẩn) x2
+
+-- Combo 21: Combo Nhóm 2 Tròn Vị (combo_id = 21)
+-- 3 Miếng Gà Rán + 1 Mì Ý Gà Viên + 2 Ly Pepsi (Tiêu chuẩn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (21, 3, 1);  -- 3 Miếng gà rán
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (21, 18, 1); -- Mì Ý Gà Viên
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (21, 41, 2); -- Pepsi (Tiêu Chuẩn) x2
+
+-- Combo 22: Combo Nhóm 2 No Nê (combo_id = 22)
+-- 4 Miếng Gà Rán + 1 Khoai Múi Cau (Vừa) + 2 Ly Pepsi (Tiêu chuẩn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (22, 1, 4);  -- 1 Miếng gà rán x4
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (22, 29, 1); -- Khoai Tây Múi Cau (Vừa)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (22, 41, 2); -- Pepsi (Tiêu Chuẩn) x2
+
+-- Combo 23: Combo Nhóm 3 Đủ Đầy (combo_id = 23)
+-- 3 Miếng Gà Rán + 1 Mì Ý Gà Viên + 1 Burger Tôm + 1 Khoai Tây Chiên (Vừa) + 3 Ly Pepsi (Tiêu chuẩn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (23, 3, 1);  -- 3 Miếng gà rán
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (23, 18, 1); -- Mì Ý Gà Viên
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (23, 14, 1); -- Burger Tôm
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (23, 26, 1); -- Khoai Tây Chiên (Vừa)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (23, 41, 3); -- Pepsi (Tiêu Chuẩn) x3
+
+-- Combo 24: Combo Nhóm 5 Hội Tụ (combo_id = 24)
+-- 6 Miếng Gà Rán + 1 Mì Ý Gà Viên + 1 Khoai Múi Cau (Vừa) + 5 Ly Pepsi (Tiêu chuẩn)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (24, 4, 1);  -- 6 Miếng gà rán
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (24, 18, 1); -- Mì Ý Gà Viên
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (24, 29, 1); -- Khoai Tây Múi Cau (Vừa)
+INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (24, 41, 5); -- Pepsi (Tiêu Chuẩn) x5
+
 -- ===== User =====
 INSERT INTO "User" (name, username, password_hash, role) VALUES('Administrator','Admin', 'Admin123', 'admin');
 INSERT INTO "User" (name, username, password_hash, role) VALUES('Staff1','Staff1', 'Staff123', 'staff');

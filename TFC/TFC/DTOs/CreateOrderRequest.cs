@@ -20,10 +20,6 @@ namespace TFC.DTOs
         [StringLength(100, ErrorMessage = "Tên không được vượt quá 100 ký tự")]
         public string Name { get; set; } = null!;
 
-        [Required(ErrorMessage = "Số điện thoại là bắt buộc")]
-        [RegularExpression(@"^[0-9]{10,11}$", ErrorMessage = "Số điện thoại không hợp lệ")]
-        public string Phone { get; set; } = null!;
-
         [EmailAddress(ErrorMessage = "Email không hợp lệ")]
         public string? Email { get; set; }
     }
@@ -34,7 +30,7 @@ namespace TFC.DTOs
         public string Id { get; set; } = null!;
 
         [Required]
-        public string Type { get; set; } = null!; // "product" or "combo"
+        public string Type { get; set; } = null!; 
 
         [Required]
         public string Name { get; set; } = null!;

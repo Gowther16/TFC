@@ -6,11 +6,11 @@ namespace TFC.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class OrderController : ControllerBase
+    public class OrderApiController : ControllerBase
     {
         private readonly IOrderService _orderService;
 
-        public OrderController(IOrderService orderService)
+        public OrderApiController(IOrderService orderService)
         {
             _orderService = orderService;
         }
@@ -46,17 +46,17 @@ namespace TFC.Controllers
                 return StatusCode(500, new { success = false, message = "Có lỗi xảy ra khi xử lý đơn hàng" });
             }
         }
-        [HttpPost("GetOrdersByPhone")]
-        public async Task<IActionResult> GetOrdersByPhone([FromBody] GetOrdersByPhoneRequest request)
+        [HttpPost("GetOrdersByOrderCode")]
+        public async Task<IActionResult> GetOrdersByPhone([FromBody] GetOrdersByOrderCodeRequest request)
         {
             try
             {
-                if (string.IsNullOrEmpty(request.PhoneNumber))
+                if (string.IsNullOrEmpty(request.OrderCode))
                 {
-                    return BadRequest(new { success = false, message = "Số điện thoại không được để trống" });
+                    return BadRequest(new { success = false, message = "Order Code không được để trống" });
                 }
 
-                var result = await _orderService.GetOrdersByPhoneAsync(request.PhoneNumber);
+                var result = await _orderService.GetOrdersByOrderCodeAsync(request.OrderCode);
 
                 if (result.Success)
                 {
@@ -80,8 +80,8 @@ namespace TFC.Controllers
         }
     }
 
-    public class GetOrdersByPhoneRequest
+    public class GetOrdersByOrderCodeRequest
     {
-        public string PhoneNumber { get; set; }
+        public string OrderCode { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace TFC.Services
     public interface IOrderService
     {
         Task<CreateOrderResult> CreateOrderAsync(CreateOrderRequest request);
-        Task<GetOrdersByPhoneResult> GetOrdersByPhoneAsync(string phoneNumber);
+        Task<GetOrdersByOrderCodeResult> GetOrdersByOrderCodeAsync(string OrderCode);
     }
 
     public class CreateOrderResult

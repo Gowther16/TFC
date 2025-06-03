@@ -106,28 +106,12 @@ namespace TFC.Services
                 };
             }
         }
-
-        // Thêm phương thức mới để tìm đơn hàng theo số điện thoại
-        public async Task<GetOrdersByPhoneResult> GetOrdersByPhoneAsync(string phoneNumber)
+        public async Task<GetOrdersByOrderCodeResult> GetOrdersByOrderCodeAsync(string OrderCode)
         {
             try
             {
-                // Tìm customer theo số điện thoại
-                var customer = await _context.Customers
-                    .FirstOrDefaultAsync(c => c.Phone == phoneNumber);
-
-                if (customer == null)
-                {
-                    return new GetOrdersByPhoneResult
-                    {
-                        Success = false,
-                        Message = "Không tìm thấy khách hàng với số điện thoại này"
-                    };
-                }
-
-                // Lấy danh sách đơn hàng của customer
                 var orders = await _context.Orders
-                    .Where(o => o.CustomerId == customer.Id)
+                    .Where(o => o.OrderCode == OrderCode)
                     .Include(o => o.Orderitems)
                         .ThenInclude(oi => oi.Product)
                     .Include(o => o.Orderitems)
@@ -137,12 +121,16 @@ namespace TFC.Services
 
                 if (!orders.Any())
                 {
-                    return new GetOrdersByPhoneResult
+                    return new GetOrdersByOrderCodeResult
                     {
                         Success = false,
                         Message = "Không tìm thấy đơn hàng nào"
                     };
                 }
+
+                var customer = await _context.Customers
+                    .Where(c => c.Id == orders.First().CustomerId)
+                    .FirstOrDefaultAsync();
 
                 var FindOrders = orders.Select(order => new FindOrder
                 {
@@ -159,8 +147,7 @@ namespace TFC.Services
                         ComboName = item.Combo?.Name
                     }).ToList()
                 }).ToList();
-
-                return new GetOrdersByPhoneResult
+                return new GetOrdersByOrderCodeResult
                 {
                     Success = true,
                     Orders = FindOrders,
@@ -169,7 +156,7 @@ namespace TFC.Services
             }
             catch (Exception ex)
             {
-                return new GetOrdersByPhoneResult
+                return new GetOrdersByOrderCodeResult
                 {
                     Success = false,
                     Message = "Có lỗi xảy ra khi tìm kiếm đơn hàng"
@@ -180,7 +167,8 @@ namespace TFC.Services
         private async Task<Customer> FindOrCreateCustomerAsync(CustomerInfo customerInfo)
         {
             var existingCustomer = await _context.Customers
-                .FirstOrDefaultAsync(c => c.Phone == customerInfo.Phone);
+                .Where(c => c.Name == customerInfo.Name && c.Email == customerInfo.Email)
+                .FirstOrDefaultAsync();
 
             if (existingCustomer != null)
             {
@@ -197,7 +185,6 @@ namespace TFC.Services
             var newCustomer = new Customer
             {
                 Name = customerInfo.Name,
-                Phone = customerInfo.Phone,
                 Email = customerInfo.Email,
                 CreatedAt = DateTime.Now
             };
@@ -209,9 +196,9 @@ namespace TFC.Services
 
         private string GenerateOrderCode()
         {
-            var timestamp = DateTime.Now.ToString("yyyyMMdd");
+            var timestamp = DateTime.Now.ToString("dd");
             var random = new Random().Next(100, 999);
-            return $"ORD{timestamp}{random}";
+            return $"ORD-{timestamp}{random}";
         }
     }
 }
