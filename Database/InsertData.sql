@@ -5,140 +5,140 @@ INSERT INTO Category (name, description) VALUES ('GÀ - GÀ QUAY', 'Các loại 
 INSERT INTO Category (name, description) VALUES ('BURGER - CƠM - MÌ Ý', 'Các loại bánh burger, Cơm gà, mì ý');
 INSERT INTO Category (name, description) VALUES ('THỨC ĂN NHẸ', 'Các loại salad, khoai tây');
 INSERT INTO Category (name, description) VALUES ('THỨC UỐNG - TRÁNG MIỆNG', 'Các loại nước ngọt, bánh ngọt');
--- ===== PRODUCT =====
+-- ===== PRODUCT =====    
     -- Category 1 : GÀ - GÀ QUAY
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('1 Miếng gà rán', '1 Miếng Gà Giòn Cay/Gà Truyền Thống/Gà Giòn Không Cay + 1 Gói tương (cà/ ớt)', 35000, 'https://static.kfcvietnam.com.vn/images/items/lg/1-GA-XOT.jpg?v=gk7XPg', 1);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('2 Miếng gà rán', '2 Miếng Gà Giòn Cay/Gà Truyền Thống/Gà Giòn Không Cay + 2 Gói tương (cà/ ớt)', 70000, 'https://static.kfcvietnam.com.vn/images/items/lg/2-GA-XOT.jpg?v=gk7XPg', 1);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('3 Miếng gà rán', '3 Miếng Gà Giòn Cay/Gà Truyền Thống/Gà Giòn Không Cay + 3 Gói tương (cà/ ớt)', 104000, 'https://static.kfcvietnam.com.vn/images/items/lg/3-GA-XOT.jpg?v=gk7XPg', 1);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('6 Miếng gà rán', '6 Miếng Gà Giòn Cay/Gà Truyền Thống/Gà Giòn Không Cay + 6 Gói tương (cà/ ớt)', 205000, 'https://static.kfcvietnam.com.vn/images/items/lg/6-GA-XOT.jpg?v=gk7XPg', 1);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('1 Miếng Phi-lê Gà Quay', '1 Miếng Phi-lê Gà Quay Flava/Phi-lê Gà Quay Tiêu', 42000, 'https://static.kfcvietnam.com.vn/images/items/lg/PHILE-XOT.jpg?v=gk7XPg', 1);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Gà Viên (Vừa)', 'Gà Viên (Vừa) + 1 Gói tương (cà/ ớt)', 38000, 'https://static.kfcvietnam.com.vn/images/items/lg/POPCORN-XOT.jpg?v=gk7XPg', 1);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Gà Viên (Lớn)', 'Gà Viên (Lớn) + 2 Gói tương (cà/ ớt)', 64000, 'https://static.kfcvietnam.com.vn/images/items/lg/POP-L.jpg?v=gk7XPg', 1);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('3 Gà Miếng Nuggets', '3 Gà Miếng Nuggets + 1 Gói tương (cà/ ớt)', 27000, 'https://static.kfcvietnam.com.vn/images/items/lg/3_Nuggests.jpg?v=gk7XPg', 1);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('5 Gà Miếng Nuggets', '5 Gà Miếng Nuggets + 2 Gói tương (cà/ ớt)', 40000, 'https://static.kfcvietnam.com.vn/images/items/lg/5_Nuggests.jpg?v=gk7XPg', 1);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('10 Gà Miếng Nuggets', '10 Gà Miếng Nuggets + 4 Gói tương (cà/ ớt)', 75000, 'https://static.kfcvietnam.com.vn/images/items/lg/10_Nuggests.jpg?v=gk7XPg', 1);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('3 Miếng Gà Rán Tender', '3 Miếng Gà Rán Tender + 1 Gói tương (cà/ ớt)', 41000, 'https://static.kfcvietnam.com.vn/images/items/lg/TENDERS-3.jpg?v=gk7XPg', 1);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('5 Miếng Gà Rán Tender', '5 Miếng Gà Rán Tender + 2 Gói tương (cà/ ớt)', 66000, 'https://static.kfcvietnam.com.vn/images/items/lg/TENDERS-5.jpg?v=gk7XPg', 1);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('1 Miếng gà rán', '1 Miếng Gà Giòn Cay/Gà Truyền Thống/Gà Giòn Không Cay + 1 Gói tương (cà/ ớt)', 35000, 'https://static.kfcvietnam.com.vn/images/items/lg/1-GA-XOT.jpg?v=gk7XPg', 2, 1);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('2 Miếng gà rán', '2 Miếng Gà Giòn Cay/Gà Truyền Thống/Gà Giòn Không Cay + 2 Gói tương (cà/ ớt)', 70000, 'https://static.kfcvietnam.com.vn/images/items/lg/2-GA-XOT.jpg?v=gk7XPg', 10, 1);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('3 Miếng gà rán', '3 Miếng Gà Giòn Cay/Gà Truyền Thống/Gà Giòn Không Cay + 3 Gói tương (cà/ ớt)', 104000, 'https://static.kfcvietnam.com.vn/images/items/lg/3-GA-XOT.jpg?v=gk7XPg', 10, 1);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('6 Miếng gà rán', '6 Miếng Gà Giòn Cay/Gà Truyền Thống/Gà Giòn Không Cay + 6 Gói tương (cà/ ớt)', 205000, 'https://static.kfcvietnam.com.vn/images/items/lg/6-GA-XOT.jpg?v=gk7XPg', 10, 1);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('1 Miếng Phi-lê Gà Quay', '1 Miếng Phi-lê Gà Quay Flava/Phi-lê Gà Quay Tiêu', 42000, 'https://static.kfcvietnam.com.vn/images/items/lg/PHILE-XOT.jpg?v=gk7XPg', 10, 1);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Gà Viên (Vừa)', 'Gà Viên (Vừa) + 1 Gói tương (cà/ ớt)', 38000, 'https://static.kfcvietnam.com.vn/images/items/lg/POPCORN-XOT.jpg?v=gk7XPg', 10, 1);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Gà Viên (Lớn)', 'Gà Viên (Lớn) + 2 Gói tương (cà/ ớt)', 64000, 'https://static.kfcvietnam.com.vn/images/items/lg/POP-L.jpg?v=gk7XPg', 10, 1);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('3 Gà Miếng Nuggets', '3 Gà Miếng Nuggets + 1 Gói tương (cà/ ớt)', 27000, 'https://static.kfcvietnam.com.vn/images/items/lg/3_Nuggests.jpg?v=gk7XPg', 10, 1);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('5 Gà Miếng Nuggets', '5 Gà Miếng Nuggets + 2 Gói tương (cà/ ớt)', 40000, 'https://static.kfcvietnam.com.vn/images/items/lg/5_Nuggests.jpg?v=gk7XPg', 10, 1);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('10 Gà Miếng Nuggets', '10 Gà Miếng Nuggets + 4 Gói tương (cà/ ớt)', 75000, 'https://static.kfcvietnam.com.vn/images/items/lg/10_Nuggests.jpg?v=gk7XPg', 10, 1);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('3 Miếng Gà Rán Tender', '3 Miếng Gà Rán Tender + 1 Gói tương (cà/ ớt)', 41000, 'https://static.kfcvietnam.com.vn/images/items/lg/TENDERS-3.jpg?v=gk7XPg', 10, 1);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('5 Miếng Gà Rán Tender', '5 Miếng Gà Rán Tender + 2 Gói tương (cà/ ớt)', 66000, 'https://static.kfcvietnam.com.vn/images/items/lg/TENDERS-5.jpg?v=gk7XPg', 10, 1);
 
     -- Category 2 : BURGER - CƠM - MÌ Ý
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Burger Zinger', '1 Burger Zinger +1 Gói tương (cà/ ớt)', 54000, 'https://static.kfcvietnam.com.vn/images/items/lg/Burger-Zinger.jpg?v=gk7XPg', 2);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Burger Tôm', '1 Burger Tôm + 1 Gói tương (cà/ ớt)', 45000, 'https://static.kfcvietnam.com.vn/images/items/lg/Burger-Shrimp.jpg?v=gk7XPg', 2);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Burger Gà Quay Flava', '1 Burger Gà Quay Flava + 1 Gói tương (cà/ ớt)', 54000, 'https://static.kfcvietnam.com.vn/images/items/lg/Burger-Flava.jpg?v=gk7XPg', 2);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Cơm Gà Teriyaki', '1 Cơm Gà Teriyaki + 1 Gói tương (cà/ ớt)', 45000, 'https://static.kfcvietnam.com.vn/images/items/lg/Rice-Teriyaki.jpg?v=gk7XPg', 2);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Cơm Gà Rán', '1 Cơm Gà Rán + 1 Gói tương (cà/ ớt)', 49000, 'https://static.kfcvietnam.com.vn/images/items/lg/Rice-F.Chicken.jpg?v=gk7XPg', 2);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Cơm Phi-lê Gà Quay', '1 Cơm Phi-lê Gà Quay + 1 Gói tương (cà/ ớt)', 49000, 'https://static.kfcvietnam.com.vn/images/items/lg/Rice-Flava.jpg?v=gk7XPg', 2);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Cơm', '1 Cơm', 12000, 'https://static.kfcvietnam.com.vn/images/items/lg/Rice.jpg?v=gk7XPg', 2);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Mì Ý Gà Viên', '1 Mì Ý Gà Viên + 1 Gói tương (cà/ ớt) ', 40000, 'https://static.kfcvietnam.com.vn/images/items/lg/MI-Y-GA-VIEN.jpg?v=gk7XPg', 2); 
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Mì Ý Gà Rán', '1 Mì Ý Gà Rán + + 1 Gói tương (cà/ ớt)', 64000, 'https://static.kfcvietnam.com.vn/images/items/lg/MI-Y-GA-RAN.jpg?v=gk7XPg', 2);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Cơm Gà Viên Nanban', '1 Cơm Gà Viên Nanban + 1 Gói tương (cà/ ớt)', 12000, 'https://static.kfcvietnam.com.vn/images/items/lg/NANBAN.jpg?v=gk7XPg', 2);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES 
+('Burger Zinger', '1 Burger Zinger +1 Gói tương (cà/ ớt)', 54000, 'https://static.kfcvietnam.com.vn/images/items/lg/Burger-Zinger.jpg?v=gk7XPg', 10, 2);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES 
+('Burger Tôm', '1 Burger Tôm + 1 Gói tương (cà/ ớt)', 45000, 'https://static.kfcvietnam.com.vn/images/items/lg/Burger-Shrimp.jpg?v=gk7XPg', 10, 2);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Burger Gà Quay Flava', '1 Burger Gà Quay Flava + 1 Gói tương (cà/ ớt)', 54000, 'https://static.kfcvietnam.com.vn/images/items/lg/Burger-Flava.jpg?v=gk7XPg', 10, 2);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Cơm Gà Teriyaki', '1 Cơm Gà Teriyaki + 1 Gói tương (cà/ ớt)', 45000, 'https://static.kfcvietnam.com.vn/images/items/lg/Rice-Teriyaki.jpg?v=gk7XPg', 10, 2);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Cơm Gà Rán', '1 Cơm Gà Rán + 1 Gói tương (cà/ ớt)', 49000, 'https://static.kfcvietnam.com.vn/images/items/lg/Rice-F.Chicken.jpg?v=gk7XPg', 10, 2);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Cơm Phi-lê Gà Quay', '1 Cơm Phi-lê Gà Quay + 1 Gói tương (cà/ ớt)', 49000, 'https://static.kfcvietnam.com.vn/images/items/lg/Rice-Flava.jpg?v=gk7XPg', 10, 2);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Cơm', '1 Cơm', 12000, 'https://static.kfcvietnam.com.vn/images/items/lg/Rice.jpg?v=gk7XPg', 10, 2);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Mì Ý Gà Viên', '1 Mì Ý Gà Viên + 1 Gói tương (cà/ ớt) ', 40000, 'https://static.kfcvietnam.com.vn/images/items/lg/MI-Y-GA-VIEN.jpg?v=gk7XPg', 10, 2);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Mì Ý Gà Rán', '1 Mì Ý Gà Rán + + 1 Gói tương (cà/ ớt)', 64000, 'https://static.kfcvietnam.com.vn/images/items/lg/MI-Y-GA-RAN.jpg?v=gk7XPg', 10, 2);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Cơm Gà Viên Nanban', '1 Cơm Gà Viên Nanban + 1 Gói tương (cà/ ớt)', 12000, 'https://static.kfcvietnam.com.vn/images/items/lg/NANBAN.jpg?v=gk7XPg', 10, 2);
 
     -- Category 3 : THỨC ĂN NHẸ
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Salad Hạt', '1 Salad Hạt ', 39000, 'https://static.kfcvietnam.com.vn/images/items/lg/SALAD-HAT.jpg?v=gk7XPg', 3);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Salad Pop', '1 Salad Hạt Gà Viên Popcorn', 45000, 'https://static.kfcvietnam.com.vn/images/items/lg/SALAD-HAT-GA-VIEN.jpg?v=gk7XPg', 3);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('3 Cá Thanh', '3 Cá Thanh + 1 Gói tương (cà/ ớt)', 40000, 'https://static.kfcvietnam.com.vn/images/items/lg/3-FISH-STICK.jpg?v=gk7XPg', 3);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('4 Phô Mai Viên', '4 Phô Mai Viên + 1 Gói tương (cà/ ớt)', 36000, 'https://static.kfcvietnam.com.vn/images/items/lg/4-Chewy-Cheese.jpg?v=gk7XPg', 3);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('6 Phô Mai Viên', '6 Phô Mai Viên + 1 Gói tương (cà/ ớt)', 49000, 'https://static.kfcvietnam.com.vn/images/items/lg/6-Chewy-Cheese.jpg?v=gk7XPg', 3);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Khoai Tây Chiên (Vừa)', 'Khoai Tây Chiên (Vừa) + 1 Gói tương (cà/ ớt)', 19000, 'https://static.kfcvietnam.com.vn/images/items/lg/FF-R.jpg?v=gk7XPg', 3);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Khoai Tây Chiên (Lớn)', 'Khoai Tây Chiên (Lớn) + 1 Gói tương (cà/ ớt)', 29000, 'https://static.kfcvietnam.com.vn/images/items/lg/FF-L.jpg?v=gk7XPg', 3);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Khoai Tây Chiên (Đại)', 'Khoai Tây Chiên (Đại) + 2 Gói tương (cà/ ớt)', 39000, 'https://static.kfcvietnam.com.vn/images/items/lg/FF-J.jpg?v=gk7XPg', 3);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Khoai Tây Múi Cau (Vừa)', '01 Khoai Tây Múi Cau (vừa) + 1 Gói tương (cà/ ớt)', 23000, 'https://static.kfcvietnam.com.vn/images/items/lg/khoai-mui-cau-R.jpg?v=gk7XPg', 3);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Khoai Tây Múi Cau (Lớn)', '01 Khoai Tây Múi Cau (lớn) + 1 Gói tương (cà/ ớt)', 43000, 'https://static.kfcvietnam.com.vn/images/items/lg/khoai-mui-cau-L.jpg?v=gk7XPg', 3);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Khoai Tây Nghiền (Vừa)', 'Khoai Tây Nghiền (Vừa)', 12000, 'https://static.kfcvietnam.com.vn/images/items/lg/MP-(R)-new.jpg?v=gk7XPg', 3);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Khoai Tây Nghiền (Lớn)', 'Khoai Tây Nghiền (Lớn)', 22000, 'https://static.kfcvietnam.com.vn/images/items/lg/MP-(L)-new.jpg?v=gk7XPg', 3);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Khoai Tây Nghiền (Đại)', 'Khoai Tây Nghiền (Đại)', 31000, 'https://static.kfcvietnam.com.vn/images/items/lg/MP-(J)-new.jpg?v=gk7XPg', 3);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Bắp Cải Trộn (Vừa)', 'Bắp Cải Trộn (Vừa)', 12000, 'https://static.kfcvietnam.com.vn/images/items/lg/CL-(R)-new.jpg?v=gk7XPg', 3);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Bắp Cải Trộn (Lớn)', 'Bắp Cải Trộn (Lớn)', 22000, 'https://static.kfcvietnam.com.vn/images/items/lg/CL-(L)-new.jpg?v=gk7XPg', 3);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Bắp Cải Trộn (Đại)', 'Bắp Cải Trộn (Đại)', 31000, 'https://static.kfcvietnam.com.vn/images/items/lg/CL-(J)-new.jpg?v=gk7XPg', 3);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Súp Rong Biển', 'Súp Rong Biển', 19000, 'https://static.kfcvietnam.com.vn/images/items/lg/Soup-Rong-Bien.jpg?v=gk7XPg', 3);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES 
+('Salad Hạt', '1 Salad Hạt ', 39000, 'https://static.kfcvietnam.com.vn/images/items/lg/SALAD-HAT.jpg?v=gk7XPg', 10, 3);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES 
+('Salad Pop', '1 Salad Hạt Gà Viên Popcorn', 45000, 'https://static.kfcvietnam.com.vn/images/items/lg/SALAD-HAT-GA-VIEN.jpg?v=gk7XPg', 10, 3);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES 
+('3 Cá Thanh', '3 Cá Thanh + 1 Gói tương (cà/ ớt)', 40000, 'https://static.kfcvietnam.com.vn/images/items/lg/3-FISH-STICK.jpg?v=gk7XPg', 10, 3);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES 
+('4 Phô Mai Viên', '4 Phô Mai Viên + 1 Gói tương (cà/ ớt)', 36000, 'https://static.kfcvietnam.com.vn/images/items/lg/4-Chewy-Cheese.jpg?v=gk7XPg', 10, 3);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES 
+('6 Phô Mai Viên', '6 Phô Mai Viên + 1 Gói tương (cà/ ớt)', 49000, 'https://static.kfcvietnam.com.vn/images/items/lg/6-Chewy-Cheese.jpg?v=gk7XPg', 10, 3);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES 
+('Khoai Tây Chiên (Vừa)', 'Khoai Tây Chiên (Vừa) + 1 Gói tương (cà/ ớt)', 19000, 'https://static.kfcvietnam.com.vn/images/items/lg/FF-R.jpg?v=gk7XPg', 10, 3);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES 
+('Khoai Tây Chiên (Lớn)', 'Khoai Tây Chiên (Lớn) + 1 Gói tương (cà/ ớt)', 29000, 'https://static.kfcvietnam.com.vn/images/items/lg/FF-L.jpg?v=gk7XPg', 10, 3);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES 
+('Khoai Tây Chiên (Đại)', 'Khoai Tây Chiên (Đại) + 2 Gói tương (cà/ ớt)', 39000, 'https://static.kfcvietnam.com.vn/images/items/lg/FF-J.jpg?v=gk7XPg', 10, 3);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES 
+('Khoai Tây Múi Cau (Vừa)', '01 Khoai Tây Múi Cau (vừa) + 1 Gói tương (cà/ ớt)', 23000, 'https://static.kfcvietnam.com.vn/images/items/lg/khoai-mui-cau-R.jpg?v=gk7XPg', 10, 3);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES 
+('Khoai Tây Múi Cau (Lớn)', '01 Khoai Tây Múi Cau (lớn) + 1 Gói tương (cà/ ớt)', 43000, 'https://static.kfcvietnam.com.vn/images/items/lg/khoai-mui-cau-L.jpg?v=gk7XPg', 10, 3);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES 
+('Khoai Tây Nghiền (Vừa)', 'Khoai Tây Nghiền (Vừa)', 12000, 'https://static.kfcvietnam.com.vn/images/items/lg/MP-(R)-new.jpg?v=gk7XPg', 10, 3);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES 
+('Khoai Tây Nghiền (Lớn)', 'Khoai Tây Nghiền (Lớn)', 22000, 'https://static.kfcvietnam.com.vn/images/items/lg/MP-(L)-new.jpg?v=gk7XPg', 10, 3);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES 
+('Khoai Tây Nghiền (Đại)', 'Khoai Tây Nghiền (Đại)', 31000, 'https://static.kfcvietnam.com.vn/images/items/lg/MP-(J)-new.jpg?v=gk7XPg', 10, 3);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES 
+('Bắp Cải Trộn (Vừa)', 'Bắp Cải Trộn (Vừa)', 12000, 'https://static.kfcvietnam.com.vn/images/items/lg/CL-(R)-new.jpg?v=gk7XPg', 10, 3);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES 
+('Bắp Cải Trộn (Lớn)', 'Bắp Cải Trộn (Lớn)', 22000, 'https://static.kfcvietnam.com.vn/images/items/lg/CL-(L)-new.jpg?v=gk7XPg', 10, 3);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES 
+('Bắp Cải Trộn (Đại)', 'Bắp Cải Trộn (Đại)', 31000, 'https://static.kfcvietnam.com.vn/images/items/lg/CL-(J)-new.jpg?v=gk7XPg', 10, 3);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES 
+('Súp Rong Biển', 'Súp Rong Biển', 19000, 'https://static.kfcvietnam.com.vn/images/items/lg/Soup-Rong-Bien.jpg?v=gk7XPg', 10, 3);
 
     -- Category 4 : THỨC UỐNG - TRÁNG MIỆNG
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('1 Bánh Trứng', '1 Bánh Trứng', 18000, 'https://static.kfcvietnam.com.vn/images/items/lg/EGGTART-1.jpg?v=gk7XPg', 4);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('4 Bánh Trứng', '4 Bánh Trứng', 64000, 'https://static.kfcvietnam.com.vn/images/items/lg/EGGTART-4.jpg?v=gk7XPg', 4);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('2 Viên Khoai Môn Kim Sa', '2 Viên Khoai Môn Kim Sa', 26000, 'https://static.kfcvietnam.com.vn/images/items/lg/2-taro.jpg?v=gk7XPg', 4);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('3 Viên Khoai Môn Kim Sa', '3 Viên Khoai Môn Kim Sa', 34000, 'https://static.kfcvietnam.com.vn/images/items/lg/3-taro.jpg?v=gk7XPg', 4);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('5 Viên Khoai Môn Kim Sa', '5 Viên Khoai Môn Kim Sa', 54000, 'https://static.kfcvietnam.com.vn/images/items/lg/5-taro.jpg?v=gk7XPg', 4);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Pepsi Lon', 'Pepsi Lon', 19000, 'https://static.kfcvietnam.com.vn/images/items/lg/PEPSI_CAN.jpg?v=gk7XPg', 4);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('7Up Lon', '7Up Lon', 19000, 'https://static.kfcvietnam.com.vn/images/items/lg/7UP_CAN.jpg?v=gk7XPg', 4);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Aquafina 500ml', 'Aquafina 500ml', 15000, 'https://static.kfcvietnam.com.vn/images/items/lg/AQUAFINA.jpg?v=gk7XPg', 4);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Pepsi Không Calo Lon', 'Pepsi Không Calo Lon', 19000, 'https://static.kfcvietnam.com.vn/images/items/lg/pepsi-zero.jpg?v=gk7XPg', 4);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Lon Sting', 'Lon Sting', 19000, 'https://static.kfcvietnam.com.vn/images/items/lg/Sting.jpg?v=gk7XPg', 4);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Pepsi (Tiêu Chuẩn)', '1 Ly Pepsi (Tiêu Chuẩn)', 12000, 'https://static.kfcvietnam.com.vn/images/items/lg/PEPSI-STD.jpg?v=gk7XPg', 4);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Pepsi (Vừa)', '1 Ly Pepsi (Vừa)', 15000, 'https://static.kfcvietnam.com.vn/images/items/lg/PEPSI-M.jpg?v=gk7XPg', 4);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Pepsi (Đại)', '1 Ly Pepsi (Đại)', 19000, 'https://static.kfcvietnam.com.vn/images/items/lg/PEPSI-J.jpg?v=gk7XPg', 4);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('7Up (Tiêu Chuẩn)', '1 Ly 7Up (Tiêu Chuẩn)', 12000, 'https://static.kfcvietnam.com.vn/images/items/lg/7UP-STD.jpg?v=gk7XPg', 4);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('7Up (Vừa)', '1 Ly 7Up (Vừa)', 15000, 'https://static.kfcvietnam.com.vn/images/items/lg/7UP-R.jpg?v=gk7XPg', 4);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('7Up (Đại)', '1 Ly 7Up (Đại)', 19000, 'https://static.kfcvietnam.com.vn/images/items/lg/7UP-L.jpg?v=gk7XPg', 4);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Lipton (Tiêu Chuẩn)', '1 Ly Lipton (Tiêu Chuẩn)', 12000, 'https://static.kfcvietnam.com.vn/images/items/lg/LIPTON-STD.jpg?v=gk7XPg', 4);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Lipton (Vừa)', '1 Ly Lipton (Vừa)', 15000, 'https://static.kfcvietnam.com.vn/images/items/lg/LIPTON-M.jpg?v=gk7XPg', 4);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Lipton (Đại)', '1 Ly Lipton (Đại)', 19000, 'https://static.kfcvietnam.com.vn/images/items/lg/LIPTON-J.jpg?v=gk7XPg', 4);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Pepsi Không Đường (Tiêu Chuẩn)', '1 Ly Pepsi Không Đường (Tiêu Chuẩn)', 12000, 'https://static.kfcvietnam.com.vn/images/items/lg/PEPSI-ZERO-STD.jpg?v=gk7XPg', 4);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Pepsi Không Đường (Vừa)', '1 Ly Pepsi Không Đường (Vừa)', 15000, 'https://static.kfcvietnam.com.vn/images/items/lg/PEPSI-ZERO-M.jpg?v=gk7XPg', 4);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Pepsi Không Đường (Đại)', '1 Ly Pepsi Không Đường (Đại)', 19000, 'https://static.kfcvietnam.com.vn/images/items/lg/PEPSI-ZERO-J.jpg?v=gk7XPg', 4);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Sô-cô-la Sữa Đá', '1 Ly Sô-cô-la Sữa Đá', 20000, 'https://static.kfcvietnam.com.vn/images/items/lg/CHOCO-MILK-STD.jpg?v=gk7XPg', 4);
-INSERT INTO Product (name, description, price, image_url, category_id)
-VALUES ('Sô-cô-la Sữa Nóng', '1 Ly Sô-cô-la Sữa Nóng', 20000, 'https://static.kfcvietnam.com.vn/images/items/lg/ChoCo_Hot.jpg?v=gk7XPg', 4);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES 
+('1 Bánh Trứng', '1 Bánh Trứng', 18000, 'https://static.kfcvietnam.com.vn/images/items/lg/EGGTART-1.jpg?v=gk7XPg', 10, 4);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('4 Bánh Trứng', '4 Bánh Trứng', 64000, 'https://static.kfcvietnam.com.vn/images/items/lg/EGGTART-4.jpg?v=gk7XPg', 10, 4);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('2 Viên Khoai Môn Kim Sa', '2 Viên Khoai Môn Kim Sa', 26000, 'https://static.kfcvietnam.com.vn/images/items/lg/2-taro.jpg?v=gk7XPg', 10, 4);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('3 Viên Khoai Môn Kim Sa', '3 Viên Khoai Môn Kim Sa', 34000, 'https://static.kfcvietnam.com.vn/images/items/lg/3-taro.jpg?v=gk7XPg', 10, 4);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('5 Viên Khoai Môn Kim Sa', '5 Viên Khoai Môn Kim Sa', 54000, 'https://static.kfcvietnam.com.vn/images/items/lg/5-taro.jpg?v=gk7XPg', 10, 4);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Pepsi Lon', 'Pepsi Lon', 19000, 'https://static.kfcvietnam.com.vn/images/items/lg/PEPSI_CAN.jpg?v=gk7XPg', 10, 4);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('7Up Lon', '7Up Lon', 19000, 'https://static.kfcvietnam.com.vn/images/items/lg/7UP_CAN.jpg?v=gk7XPg', 10, 4);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Aquafina 500ml', 'Aquafina 500ml', 15000, 'https://static.kfcvietnam.com.vn/images/items/lg/AQUAFINA.jpg?v=gk7XPg', 10, 4);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Pepsi Không Calo Lon', 'Pepsi Không Calo Lon', 19000, 'https://static.kfcvietnam.com.vn/images/items/lg/pepsi-zero.jpg?v=gk7XPg', 10, 4);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Lon Sting', 'Lon Sting', 19000, 'https://static.kfcvietnam.com.vn/images/items/lg/Sting.jpg?v=gk7XPg', 10, 4);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Pepsi (Tiêu Chuẩn)', '1 Ly Pepsi (Tiêu Chuẩn)', 12000, 'https://static.kfcvietnam.com.vn/images/items/lg/PEPSI-STD.jpg?v=gk7XPg', 10, 4);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Pepsi (Vừa)', '1 Ly Pepsi (Vừa)', 15000, 'https://static.kfcvietnam.com.vn/images/items/lg/PEPSI-M.jpg?v=gk7XPg', 10, 4);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Pepsi (Đại)', '1 Ly Pepsi (Đại)', 19000, 'https://static.kfcvietnam.com.vn/images/items/lg/PEPSI-J.jpg?v=gk7XPg', 10, 4);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('7Up (Tiêu Chuẩn)', '1 Ly 7Up (Tiêu Chuẩn)', 12000, 'https://static.kfcvietnam.com.vn/images/items/lg/7UP-STD.jpg?v=gk7XPg', 10, 4);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('7Up (Vừa)', '1 Ly 7Up (Vừa)', 15000, 'https://static.kfcvietnam.com.vn/images/items/lg/7UP-R.jpg?v=gk7XPg', 10, 4);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('7Up (Đại)', '1 Ly 7Up (Đại)', 19000, 'https://static.kfcvietnam.com.vn/images/items/lg/7UP-L.jpg?v=gk7XPg', 10, 4);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Lipton (Tiêu Chuẩn)', '1 Ly Lipton (Tiêu Chuẩn)', 12000, 'https://static.kfcvietnam.com.vn/images/items/lg/LIPTON-STD.jpg?v=gk7XPg', 10, 4);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Lipton (Vừa)', '1 Ly Lipton (Vừa)', 15000, 'https://static.kfcvietnam.com.vn/images/items/lg/LIPTON-M.jpg?v=gk7XPg', 10, 4);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Lipton (Đại)', '1 Ly Lipton (Đại)', 19000, 'https://static.kfcvietnam.com.vn/images/items/lg/LIPTON-J.jpg?v=gk7XPg', 10, 4);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Pepsi Không Đường (Tiêu Chuẩn)', '1 Ly Pepsi Không Đường (Tiêu Chuẩn)', 12000, 'https://static.kfcvietnam.com.vn/images/items/lg/PEPSI-ZERO-STD.jpg?v=gk7XPg', 10, 4);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Pepsi Không Đường (Vừa)', '1 Ly Pepsi Không Đường (Vừa)', 15000, 'https://static.kfcvietnam.com.vn/images/items/lg/PEPSI-ZERO-M.jpg?v=gk7XPg', 10, 4);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Pepsi Không Đường (Đại)', '1 Ly Pepsi Không Đường (Đại)', 19000, 'https://static.kfcvietnam.com.vn/images/items/lg/PEPSI-ZERO-J.jpg?v=gk7XPg', 10, 4);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Sô-cô-la Sữa Đá', '1 Ly Sô-cô-la Sữa Đá', 20000, 'https://static.kfcvietnam.com.vn/images/items/lg/CHOCO-MILK-STD.jpg?v=gk7XPg', 10, 4);
+INSERT INTO Product (name, description, price, image_url, inventory, category_id) VALUES
+('Sô-cô-la Sữa Nóng', '1 Ly Sô-cô-la Sữa Nóng', 20000, 'https://static.kfcvietnam.com.vn/images/items/lg/ChoCo_Hot.jpg?v=gk7XPg', 10, 4);
 
 -- ===== COMBO =====
 INSERT INTO Combo (name, description, price, image_url)

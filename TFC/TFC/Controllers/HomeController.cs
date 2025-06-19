@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TFC.Models;
 
@@ -21,11 +22,17 @@ namespace TFC.Controllers
         {
             return View();
         }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [Authorize(Roles = "admin")]
+        public IActionResult AdminOnly()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
         }
+
+        [Authorize(Roles = "admin,staff")]
+        public IActionResult StaffAndAdmin()
+        {
+            return View();
+        }
+
     }
 }

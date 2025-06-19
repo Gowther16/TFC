@@ -13,7 +13,9 @@ public partial class Ordertable
 
     public string? Status { get; set; }
 
-    public DateTime? ReservationTime { get; set; }
+    public string? Location { get; set; }
+
+    public DateTime? CreatedAt { get; set; }
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }

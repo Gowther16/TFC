@@ -1,59 +1,55 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
-    const modal = document.getElementById('phoneModal');
+    // Sử dụng Bootstrap Modal API
+    const modal = new bootstrap.Modal(document.getElementById('orderModal'));
     const cusOrderBtn = document.getElementById('cusOrder');
-    const closeBtn = document.querySelector('.close');
-    const phoneForm = document.getElementById('phoneForm');
-    const loadingDiv = document.querySelector('.loading');
+    const orderForm = document.getElementById('orderForm');
+    const loadingDiv = document.getElementById('loadingSpinner'); 
     const errorMessage = document.getElementById('errorMessage');
     const ordersContainer = document.getElementById('ordersContainer');
     const customerNameDiv = document.getElementById('customerName');
     const ordersListDiv = document.getElementById('ordersList');
 
+    // Mở modal khi click "Your Order"
     cusOrderBtn.addEventListener('click', function (e) {
         e.preventDefault();
-        modal.style.display = 'block';
-        phoneForm.reset();
+        modal.show();
+        orderForm.reset();
         hideMessage();
-        ordersContainer.style.display = 'none';
+        ordersContainer.classList.add('d-none'); 
     });
 
-    closeBtn.addEventListener('click', function () {
-        modal.style.display = 'none';
-    });
-
-    window.addEventListener('click', function (e) {
-        if (e.target === modal) {
-            modal.style.display = 'none';
-        }
-    });
-
-    phoneForm.addEventListener('submit', function (e) {
+    // Xử lý form submit
+    orderForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
-        const phoneNumber = document.getElementById('phoneNumber').value.trim();
+        const orderCode = document.getElementById('orderCode').value.trim();
 
-        if (!phoneNumber) {
-            showError('Vui lòng nhập số điện thoại');
+        if (!orderCode) {
+            showError('Vui lòng nhập mã đơn hàng');
             return;
         }
 
-        searchOrders(phoneNumber);
+        searchOrders(orderCode);
     });
 
-    function searchOrders(phoneNumber) {
+    function searchOrders(orderCode) {
         showLoading();
         hideMessage();
-        ordersContainer.style.display = 'none';
+        ordersContainer.classList.add('d-none');
 
-        fetch('/Order/GetOrdersByPhone', {
+        fetch('http://localhost:5014/OrderApi/GetOrdersByOrderCode', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ phoneNumber: phoneNumber })
+            body: JSON.stringify({ orderCode: orderCode })
         })
-            .then(response => response.json())
+            .then(response => {
+                console.log('Response status:', response.status);
+                return response.json();
+            })
             .then(data => {
+                console.log('Response data:', data);
                 hideLoading();
 
                 if (data.success) {
@@ -63,54 +59,68 @@
                 }
             })
             .catch(error => {
+                console.error('Fetch error:', error);
                 hideLoading();
-                showError('Có lỗi xảy ra khi tìm kiếm đơn hàng');
-                console.error('Error:', error);
+                showError('Có lỗi xảy ra khi tìm kiếm đơn hàng. Vui lòng kiểm tra kết nối mạng.');
             });
     }
 
     function displayOrders(customerName, orders) {
+        console.log('Displaying orders:', customerName, orders);
+
         customerNameDiv.textContent = `Đơn hàng của: ${customerName}`;
         ordersListDiv.innerHTML = '';
 
+        if (!orders || orders.length === 0) {
+            ordersListDiv.innerHTML = '<p class="text-muted">Không có đơn hàng nào.</p>';
+            ordersContainer.classList.remove('d-none');
+            return;
+        }
+
         orders.forEach(order => {
             const orderDiv = document.createElement('div');
-            orderDiv.className = 'order-item';
+            orderDiv.className = 'card mb-3 order-item';
 
-            const statusClass = order.status.toLowerCase() === 'pending' ? 'status-pending' : 'status-completed';
+            const statusClass = order.status && order.status.toLowerCase() === 'pending' ? 'badge bg-warning text-dark' : 'badge bg-success';
 
             let itemsHtml = '';
-            order.items.forEach(item => {
-                const itemName = item.productName || item.comboName || 'Sản phẩm';
-                itemsHtml += `
-                            <div class="item">
-                                <span>${itemName} x${item.quantity}</span>
-                                <span>${formatCurrency(item.unitPrice * item.quantity)}</span>
-                            </div>
-                        `;
-            });
-
-            orderDiv.innerHTML = `
-                        <div class="order-header">
-                            <div class="order-code">Mã đơn: ${order.orderCode}</div>
-                            <div class="order-status ${statusClass}">${order.status}</div>
-                        </div>
-                        <div class="order-time">Thời gian đặt: ${formatDate(order.createdAt)}</div>
-                        <div class="order-items">
-                            ${itemsHtml}
-                        </div>
-                        <div class="total-amount">
-                            Tổng tiền: ${formatCurrency(order.totalAmount)}
+            if (order.items && order.items.length > 0) {
+                order.items.forEach(item => {
+                    const itemName = item.productName || item.comboName || 'Sản phẩm';
+                    itemsHtml += `
+                        <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                            <span>${itemName} x${item.quantity}</span>
+                            <span class="fw-bold">${formatCurrency(item.unitPrice * item.quantity)}</span>
                         </div>
                     `;
+                });
+            }
+
+            orderDiv.innerHTML = `
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="card-title mb-0">Mã đơn: ${order.orderCode}</h6>
+                        <span class="${statusClass}">${order.status || 'Đang xử lý'}</span>
+                    </div>
+                    <p class="text-muted small mb-3">Thời gian đặt: ${formatDate(order.createdAt)}</p>
+                    <div class="order-items mb-3">
+                        ${itemsHtml}
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <strong>Tổng tiền:</strong>
+                        <strong class="text-danger">${formatCurrency(order.totalAmount)}</strong>
+                    </div>
+                </div>
+            `;
 
             ordersListDiv.appendChild(orderDiv);
         });
 
-        ordersContainer.style.display = 'block';
+        ordersContainer.classList.remove('d-none');
     }
 
     function formatCurrency(amount) {
+        if (!amount && amount !== 0) return '0 ₫';
         return new Intl.NumberFormat('vi-VN', {
             style: 'currency',
             currency: 'VND',
@@ -119,30 +129,36 @@
     }
 
     function formatDate(dateString) {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('vi-VN', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
+        if (!dateString) return 'Không xác định';
+        try {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('vi-VN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        } catch (error) {
+            console.error('Date formatting error:', error);
+            return 'Không xác định';
+        }
     }
 
     function showLoading() {
-        loadingDiv.style.display = 'block';
+        loadingDiv.classList.remove('d-none');
     }
 
     function hideLoading() {
-        loadingDiv.style.display = 'none';
+        loadingDiv.classList.add('d-none');
     }
 
     function showError(message) {
         errorMessage.textContent = message;
-        errorMessage.style.display = 'block';
+        errorMessage.classList.remove('d-none');
     }
 
     function hideMessage() {
-        errorMessage.style.display = 'none';
+        errorMessage.classList.add('d-none');
     }
 });

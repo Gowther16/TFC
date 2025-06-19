@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TFC.DTOs;
+using TFC.Interfaces;
 using TFC.Models;
 using static TFC.DTOs.FindOrderDTO;
 
@@ -23,12 +24,12 @@ namespace TFC.Services
                 var customer = await FindOrCreateCustomerAsync(request.Customer);
 
                 var orderCode = GenerateOrderCode();
-
+                var TotalA = request.Items.Sum(item => item.Price * item.Quantity);
                 var order = new Order
                 {
                     OrderCode = orderCode,
                     CustomerId = customer.Id,
-                    TotalAmount = request.TotalAmount,
+                    TotalAmount = TotalA,
                     Status = "Pending",
                     CreatedAt = DateTime.Now
                 };
@@ -142,7 +143,7 @@ namespace TFC.Services
                     Items = order.Orderitems.Select(item => new OrderItemDTO
                     {
                         Quantity = (decimal)item.Quantity,
-                        UnitPrice = item.UnitPrice,
+                        UnitPrice = (decimal)item.UnitPrice,
                         ProductName = item.Product?.Name,
                         ComboName = item.Combo?.Name
                     }).ToList()

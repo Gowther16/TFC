@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Oracle.ManagedDataAccess.Client;
 using TFC.DTOs;
-using TFC.Services;
+using TFC.Interfaces;
 
 namespace TFC.Controllers
 {
@@ -41,13 +42,23 @@ namespace TFC.Controllers
                     return BadRequest(new { success = false, message = result.Message });
                 }
             }
+            catch (OracleException ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lỗi cơ sở dữ liệu Oracle: " + ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lỗi thao tác không hợp lệ: " + ex.Message });
+            }
             catch (Exception ex)
             {
-                return StatusCode(500, new { success = false, message = "Có lỗi xảy ra khi xử lý đơn hàng" });
+                return StatusCode(500, new { success = false, message = "Có lỗi không xác định: " + ex.Message });
             }
+
         }
+
         [HttpPost("GetOrdersByOrderCode")]
-        public async Task<IActionResult> GetOrdersByPhone([FromBody] GetOrdersByOrderCodeRequest request)
+        public async Task<IActionResult> GetOrdersByOrder([FromBody] GetOrdersByOrderCodeRequest request)
         {
             try
             {

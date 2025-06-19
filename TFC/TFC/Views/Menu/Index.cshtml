@@ -1,168 +1,293 @@
-﻿<link rel="stylesheet" href="~/css/menu.css" />
+﻿<link rel="stylesheet" href="@Url.Content("~/css/Layout.css")" />
+
 @{
     ViewData["Title"] = "Index";
     var categories = ViewBag.Categories as List<Category>;
     var combos = ViewBag.Combos as List<Combo>;
 }
 
-<!-- Navigation Categories -->
-<nav class="nav-menu">
-    <div class="nav-content">
-        @foreach (var category in categories)
-        {
-            <a href="#category-@category.Id" class="nav-item">@category.Name</a>
-        }
-        <a href="#combo" class="nav-item">Combo</a>
-        <!-- Cart Button -->
-        <div class="nav-item" id="cart-icon" onclick="toggleCart()">
-            🛒 <span id="cart-count">0</span>
+<nav class="navbar navbar-expand-lg navbar-light navbar-categories sticky-top bg-white shadow-sm" style="top: 50px; z-index: 1020;">
+    <div class="container-fluid ps-8">
+        <div class="navbar-nav d-flex flex-row overflow-auto w-100">
+            @if (categories != null)
+            {
+                @foreach (var category in categories)
+                {
+                    <a href="#category-@category.Id" class="nav-link text-uppercase fw-medium px-4 py-3 text-nowrap nav-category-item">
+                        @category.Name
+                    </a>
+                }
+            }
+            <a href="#combo" class="nav-link text-uppercase fw-medium px-4 py-3 text-nowrap nav-category-item">
+                Combo
+            </a>
+            <!-- Cart Button -->
+            <button type="button" class="nav-link px-4 py-3 d-flex align-items-center border-0 bg-transparent ms-auto" id="cart-icon" data-bs-toggle="modal" data-bs-target="#cart-modal">
+                <i class="fas fa-cart-shopping"></i> <span id="cart-count" class="badge bg-danger rounded-pill ms-2">0</span>
+            </button>
         </div>
     </div>
 </nav>
 
-<div class="promo-banner">
-    <a href="#combo" class="nav-item">🍽️ Ăn no không lo về giá? Thử ngay những combo siêu rẻ!</a>
-</div>
-@foreach (var category in categories)
-{
-    <section id="category-@category.Id" class="category-section">
-        <h2 class="section-title">@category.Name</h2>
-        <div class="category-content">
-            @if (category.Products != null && category.Products.Any())
-            {
-                <ul class="product-list">
-                    @foreach (var product in category.Products)
-                    {
-                        <li class="product-item">
-                            <img src="@product.ImageUrl" alt="@product.Name" class="product-image" />
-                            <div class="product-info">
-                                <div class="product-header">
-                                    <span class="product-name">@product.Name</span>
-                                    <span class="product-price">@product.Price.ToString("N0") đ</span>
-                                </div>
-                                <span class="product-descript">@product.Description</span>
-                            </div>
-                            <div class="product-actions">
-                                <button class="btn btn-primary" onclick="addToCart('@product.Id', '@product.Name', @product.Price, '@product.Description','product')">Thêm</button>
-                            </div>
-                        </li>
+<!-- Main Content -->
+<div class="container-fluid main-content">
+    @if (categories != null)
+    {
+        @foreach (var category in categories)
+        {
+            <section id="category-@category.Id" class="py-5">
+                <div class="container">
+                    <h2 class="display-5 fw-bold text-uppercase mb-4 position-relative">
+                        @category.Name
+                    </h2>
 
+                    @if (category.Products != null && category.Products.Any())
+                    {
+                        <div class="row g-4">
+                            @foreach (var product in category.Products)
+                            {
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="card h-100 shadow-sm border-0 product-card @(product.Inventory == 0 || product.Inventory == null ? "out-of-stock" : "")">
+                                        <div class="position-relative">
+                                            <img src="@product.ImageUrl" alt="@product.Name" class="card-img-top" style="height: 220px; object-fit: cover;">
+                                            @if (product.Inventory == 0 || product.Inventory == null)
+                                            {
+                                                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50">
+                                                    <span class="badge bg-danger fs-6 px-3 py-2">HẾT HÀNG</span>
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="card-body d-flex flex-column">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <h5 class="card-title fw-bold text-dark mb-0">@product.Name</h5>
+                                                <span class="text-danger fw-bold fs-5 text-nowrap ms-2">@product.Price.ToString("N0") đ</span>
+                                            </div>
+                                            <p class="card-text text-muted flex-grow-1" style="font-size: 14px; line-height: 1.4;">
+                                                @product.Description
+                                            </p>
+                                            @if (product.Inventory > 0)
+                                            {
+                                                <button class="btn btn-danger w-100 mt-auto" onclick="addToCart('@product.Id', '@Html.Raw(Html.Encode(product.Name))', @product.Price, '@Html.Raw(Html.Encode(product.Description))','product')">
+                                                    Thêm
+                                                </button>
+                                                <small class="text-muted mt-2">Còn lại: @product.Inventory</small>
+                                            }
+                                            else
+                                            {
+                                                <button class="btn btn-secondary w-100 mt-auto" disabled>
+                                                    Hết hàng
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
                     }
-                </ul>
+                    else
+                    {
+                        <div class="text-center text-muted py-5">
+                            <p class="fs-5">Chưa có sản phẩm nào trong danh mục này.</p>
+                        </div>
+                    }
+                </div>
+            </section>
+        }
+    }
+
+    <section id="combo" class="py-5">
+        <div class="container">
+            <h2 class="display-5 fw-bold text-uppercase mb-4 position-relative">
+                Combo
+            </h2>
+
+            @if (combos != null && combos.Any())
+            {
+                <div class="row g-4">
+                    @foreach (var combo in combos)
+                    {
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="card h-100 shadow-sm border-0 product-card @(combo.Available == false ? "out-of-stock" : "")">
+                                <div class="position-relative">
+                                    <img src="@combo.ImageUrl" alt="@combo.Name" class="card-img-top" style="height: 220px; object-fit: cover;">
+                                    @if (combo.Available == false)
+                                    {
+                                        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50">
+                                            <span class="badge bg-danger fs-6 px-3 py-2">HẾT HÀNG</span>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="card-body d-flex flex-column">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <h5 class="card-title fw-bold text-dark mb-0">@combo.Name</h5>
+                                        <span class="text-danger fw-bold fs-5 text-nowrap ms-2">@combo.Price.ToString("N0") đ</span>
+                                    </div>
+                                    <p class="card-text text-muted flex-grow-1" style="font-size: 14px; line-height: 1.4;">
+                                        @combo.Description
+                                    </p>
+
+                                    <!-- Hiển thị thông tin nguyên liệu của combo -->
+                                    @if (combo.Comboitems != null && combo.Comboitems.Any())
+                                    {
+                                        <div class="combo-items mb-2">
+                                            <small class="text-muted">
+                                                <strong>Bao gồm:</strong>
+                                                @string.Join(", ", combo.Comboitems.Select(ci => $"{ci.Product.Name} x{ci.Quantity}"))
+                                            </small>
+                                        </div>
+                                    }
+
+                                    @if (combo.Available == true)
+                                    {
+                                        <button class="btn btn-danger w-100 mt-auto"
+                                                onclick="addToCart('@combo.Id', '@Html.Raw(Html.Encode(combo.Name))', @combo.Price, '@Html.Raw(Html.Encode(combo.Description))','combo')"
+                                        @* Thêm data-items attribute *@
+                                                data-items="@string.Join(",", combo.Comboitems?.Select(ci => $"{ci.ProductId}:{ci.Quantity}") ?? new string[0])">
+                                            Thêm
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-secondary w-100 mt-auto" disabled>
+                                            Hết hàng
+                                        </button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
             }
             else
             {
-                <p class="no-products">No products available in this category.</p>
+                <div class="text-center text-muted py-5">
+                    <p class="fs-5">Hiện tại chưa có combo nào.</p>
+                </div>
             }
         </div>
     </section>
-}
+</div>
 
-<section id="combo" class="category-section">
-    <h2 class="section-title">Combo</h2>
-    <div class="category-content">
-        <ul class="product-list">
-            @foreach(var combo in combos)
-            {
-                @if (combo.Available != false)
-                {
-                        <li class="product-item">
-                            <img src="@combo.ImageUrl" alt="@combo.Name" class="product-image" />
-                            <div class="product-info">
-                                <div class="product-header">
-                                    <span class="product-name">@combo.Name</span>
-                                    <span class="product-price">@combo.Price.ToString("N0") đ</span>
-                                </div>
-                                <span class="product-descript">@combo.Description</span>
-                            </div>
-                            <div class="product-actions">
-                            <button class="btn btn-primary" onclick="addToCart('@combo.Id', '@combo.Name', @combo.Price, '@combo.Description','combo')">Thêm</button>
-                            </div>
-                        </li>
-                }
-                else
-                {
-                    <p> class="no-products">No Combo available.</p>
-                }
-            }
-        </ul>
-    </div>
-</section>
-
-<div id="cart-modal" class="cart-modal">
-    <div class="cart-content">
-        <div class="cart-header">
-            <h3>Giỏ hàng của bạn</h3>
-            <button class="close-cart" onclick="toggleCart()">&times;</button>
-        </div>
-        <div id="cart-items">
-            <div class="empty-cart">
-                <p>Giỏ hàng trống</p>
+<!-- Cart Modal -->
+<div class="modal fade" id="cart-modal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header border-bottom">
+                <h5 class="modal-title fw-bold" id="cartModalLabel">Giỏ hàng của bạn</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="toggleCart()"></button>
             </div>
-        </div>
-        <div id="cart-total" class="cart-total" style="display: none;">
-            Tổng cộng: <span id="total-amount">0</span> đ
-            <br><br>
-            <button class="btn btn-success" onclick="showCustomerForm()">Đặt Món</button>
+            <div class="modal-body">
+                <div id="cart-items">
+                    <div class="empty-cart text-center py-5">
+                        <p class="text-muted fs-5">Giỏ hàng trống</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer d-none" id="cart-total">
+                <div class="w-100">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0">Tổng cộng:</h5>
+                        <h5 class="mb-0 text-danger fw-bold">
+                            <span id="total-amount">0</span> đ
+                        </h5>
+                    </div>
+                    <button class="btn btn-success w-100" onclick="showCustomerForm()">Đặt Món</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 <!-- Customer Info Modal -->
-<div id="customer-modal" class="customer-modal">
-    <div class="customer-content">
-        <div class="customer-header">
-            <h3>Thông tin đặt món</h3>
-        </div>
-
-        <!-- Order Summary -->
-        <div class="order-summary">
-            <h4>Chi tiết đơn hàng</h4>
-            <div id="order-summary-items"></div>
-            <div class="order-total">
-                Tổng cộng: <span id="order-total-amount">0</span> đ
+<div class="modal fade" id="customer-modal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="customerModalLabel">Thông tin đặt món</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeCustomerForm()"></button>
             </div>
-        </div>
+            <div class="modal-body">
+                <!-- Order Summary -->
+                <div class="order-summary bg-light p-3 rounded mb-4">
+                    <h6 class="fw-bold mb-3">Chi tiết đơn hàng</h6>
+                    <div id="order-summary-items" class="mb-3"></div>
+                    <div class="border-top pt-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0">Tổng cộng:</h6>
+                            <h6 class="mb-0 text-danger fw-bold">
+                                <span id="order-total-amount">0</span> đ
+                            </h6>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- Customer Form -->
-        <form id="customer-form">
-            <div class="form-group">
-                <label for="customer-name">Họ và tên <span class="required">*</span></label>
-                <input type="text" id="customer-name" name="name" class="form-control" required>
-                <div class="error-message" id="name-error"></div>
+                <!-- Customer Form -->
+                <form id="customer-form">
+                    <div class="mb-3">
+                        <label for="customer-name" class="form-label fw-bold">
+                            Họ và tên <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" id="customer-name" name="name" class="form-control" required>
+                        <div class="invalid-feedback" id="name-error"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="customer-email" class="form-label fw-bold">Email</label>
+                        <input type="email" id="customer-email" name="email" class="form-control">
+                        <div class="invalid-feedback" id="email-error"></div>
+                    </div>
+                </form>
+
+                <!-- Loading State -->
+                <div class="loading d-none text-center py-4" id="loading">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-3 text-muted">Đang xử lý đơn hàng...</p>
+                </div>
+
+                <!-- Success State -->
+                <div class="success-message d-none text-center py-4" id="success-message">
+                    <div class="text-success mb-3">
+                        <i class="bi bi-check-circle-fill fs-1"></i>
+                    </div>
+                    <h4 class="text-success mb-3">✅ Đặt món thành công!</h4>
+                    <div class="alert alert-success">
+                        <p class="mb-2">Mã đơn hàng: <strong id="order-code" class="text-danger"></strong></p>
+                        <p class="mb-2">Cảm ơn bạn đã đặt hàng!</p>
+                        <p class="mb-0">Bạn có thể xem trạng thái đơn hàng của mình bằng cách nhập mã đơn hàng trong YourOrder</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="closeCustomerForm(); clearCart();">Đóng</button>
+                </div>
             </div>
-
-            <div class="form-group">
-                <label for="customer-phone">Số điện thoại <span class="required">*</span></label>
-                <input type="tel" id="customer-phone" name="phone" class="form-control" required pattern="[0-9]{10,11}">
-                <div class="error-message" id="phone-error"></div>
+            <div class="modal-footer" id="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeCustomerForm()">Hủy</button>
+                <button type="submit" form="customer-form" class="btn btn-success">Xác nhận đặt món</button>
             </div>
-
-            <div class="form-group">
-                <label for="customer-email">Email</label>
-                <input type="email" id="customer-email" name="email" class="form-control">
-                <div class="error-message" id="email-error"></div>
-            </div>
-
-            <div class="form-actions">
-                <button type="button" class="btn btn-cancel" onclick="closeCustomerForm()">Hủy</button>
-                <button type="submit" class="btn btn-success">Xác nhận đặt món</button>
-            </div>
-        </form>
-
-        <!-- Loading State -->
-        <div class="loading" id="loading">
-            <p>Đang xử lý đơn hàng...</p>
-        </div>
-
-        <!-- Success State -->
-        <div class="success-message" id="success-message">
-            <h4>✅ Đặt món thành công!</h4>
-            <p>Mã đơn hàng: <strong id="order-code"></strong></p>
-            <p>Cảm ơn bạn đã đặt hàng! Chúng tôi sẽ chuẩn bị và chuyển đồ ăn đến với bạn sớm nhất có thể.</p>
-            <button class="btn btn-primary" onclick="closeCustomerForm(); clearCart();">Đóng</button>
         </div>
     </div>
 </div>
-<script src="~/js/Cart.js"></script>
-<script src="~/js/Menu.js"></script>
 
+<style>
+    .out-of-stock {
+        opacity: 0.7;
+    }
+
+        .out-of-stock .card-img-top {
+            filter: grayscale(50%);
+        }
+
+    .position-relative {
+        position: relative;
+    }
+
+    .position-absolute {
+        position: absolute;
+    }
+
+    .bg-opacity-50 {
+        background-color: rgba(0, 0, 0, 0.5) !important;
+    }
+</style>
+
+<script src="~/js/Menu.js"></script>
+<script src="~/js/Cart.js"></script>

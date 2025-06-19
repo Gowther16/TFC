@@ -15,7 +15,5 @@ public partial class User
 
     public string? Role { get; set; }
 
-    public bool? Active { get; set; }
-
-    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+    public int? Active { get; set; }
 }

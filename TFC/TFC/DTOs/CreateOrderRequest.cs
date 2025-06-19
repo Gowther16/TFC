@@ -10,8 +10,6 @@ namespace TFC.DTOs
         [Required]
         public List<OrderItemInfo> Items { get; set; } = new List<OrderItemInfo>();
 
-        [Required]
-        public decimal TotalAmount { get; set; }
     }
 
     public class CustomerInfo
@@ -31,9 +29,6 @@ namespace TFC.DTOs
 
         [Required]
         public string Type { get; set; } = null!; 
-
-        [Required]
-        public string Name { get; set; } = null!;
 
         [Required]
         [Range(0.01, double.MaxValue, ErrorMessage = "Giá phải lớn hơn 0")]

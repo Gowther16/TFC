@@ -19,11 +19,15 @@ public partial class ModelContext : DbContext
 
     public virtual DbSet<Combo> Combos { get; set; }
 
+    public virtual DbSet<Comboitem> Comboitems { get; set; }
+
     public virtual DbSet<Customer> Customers { get; set; }
 
     public virtual DbSet<Order> Orders { get; set; }
 
     public virtual DbSet<Orderitem> Orderitems { get; set; }
+
+    public virtual DbSet<Ordertable> Ordertables { get; set; }
 
     public virtual DbSet<Product> Products { get; set; }
 
@@ -41,7 +45,7 @@ public partial class ModelContext : DbContext
 
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("SYS_C008655");
+            entity.HasKey(e => e.Id).HasName("SYS_C009029");
 
             entity.ToTable("CATEGORY");
 
@@ -61,7 +65,7 @@ public partial class ModelContext : DbContext
 
         modelBuilder.Entity<Combo>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("SYS_C008664");
+            entity.HasKey(e => e.Id).HasName("SYS_C009038");
 
             entity.ToTable("COMBO");
 
@@ -90,9 +94,37 @@ public partial class ModelContext : DbContext
                 .HasColumnName("PRICE");
         });
 
+        modelBuilder.Entity<Comboitem>(entity =>
+        {
+            entity.HasKey(e => new { e.ComboId, e.ProductId }).HasName("SYS_C009039");
+
+            entity.ToTable("COMBOITEM");
+
+            entity.Property(e => e.ComboId)
+                .HasColumnType("NUMBER")
+                .HasColumnName("COMBO_ID");
+            entity.Property(e => e.ProductId)
+                .HasColumnType("NUMBER")
+                .HasColumnName("PRODUCT_ID");
+            entity.Property(e => e.Quantity)
+                .HasDefaultValueSql("1")
+                .HasColumnType("NUMBER")
+                .HasColumnName("QUANTITY");
+
+            entity.HasOne(d => d.Combo).WithMany(p => p.Comboitems)
+                .HasForeignKey(d => d.ComboId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_COMBO_ITEM_COMBO");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.Comboitems)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_COMBO_ITEM_PRODUCT");
+        });
+
         modelBuilder.Entity<Customer>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("SYS_C008674");
+            entity.HasKey(e => e.Id).HasName("SYS_C009057");
 
             entity.ToTable("CUSTOMER");
 
@@ -112,15 +144,11 @@ public partial class ModelContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("NAME");
-            entity.Property(e => e.Phone)
-                .HasMaxLength(20)
-                .IsUnicode(false)
-                .HasColumnName("PHONE");
         });
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("SYS_C008677");
+            entity.HasKey(e => e.Id).HasName("SYS_C009060");
 
             entity.ToTable("Order");
 
@@ -144,26 +172,26 @@ public partial class ModelContext : DbContext
                 .IsUnicode(false)
                 .HasDefaultValueSql("'pending'")
                 .HasColumnName("STATUS");
+            entity.Property(e => e.TableId)
+                .HasColumnType("NUMBER")
+                .HasColumnName("TABLE_ID");
             entity.Property(e => e.TotalAmount)
                 .HasDefaultValueSql("0")
                 .HasColumnType("NUMBER(10,2)")
                 .HasColumnName("TOTAL_AMOUNT");
-            entity.Property(e => e.UserId)
-                .HasColumnType("NUMBER")
-                .HasColumnName("USER_ID");
 
             entity.HasOne(d => d.Customer).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.CustomerId)
                 .HasConstraintName("FK_ORDER_CUSTOMER");
 
-            entity.HasOne(d => d.User).WithMany(p => p.Orders)
-                .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK_ORDER_USER");
+            entity.HasOne(d => d.Table).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.TableId)
+                .HasConstraintName("FK_ORDER_TABLE");
         });
 
         modelBuilder.Entity<Orderitem>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("SYS_C008683");
+            entity.HasKey(e => e.Id).HasName("SYS_C009066");
 
             entity.ToTable("ORDERITEM");
 
@@ -202,9 +230,43 @@ public partial class ModelContext : DbContext
                 .HasConstraintName("FK_ORDERITEM_PRODUCT");
         });
 
+        modelBuilder.Entity<Ordertable>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("SYS_C009053");
+
+            entity.ToTable("ORDERTABLE");
+
+            entity.HasIndex(e => e.TableNumber, "SYS_C009054").IsUnique();
+
+            entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd()
+                .HasColumnType("NUMBER")
+                .HasColumnName("ID");
+            entity.Property(e => e.Capacity)
+                .HasColumnType("NUMBER")
+                .HasColumnName("CAPACITY");
+            entity.Property(e => e.CreatedAt)
+                .HasPrecision(6)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP\n")
+                .HasColumnName("CREATED_AT");
+            entity.Property(e => e.Location)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("LOCATION");
+            entity.Property(e => e.Status)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasDefaultValueSql("'available' ")
+                .HasColumnName("STATUS");
+            entity.Property(e => e.TableNumber)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("TABLE_NUMBER");
+        });
+
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("SYS_C008659");
+            entity.HasKey(e => e.Id).HasName("SYS_C009033");
 
             entity.ToTable("PRODUCT");
 
@@ -212,10 +274,6 @@ public partial class ModelContext : DbContext
                 .ValueGeneratedOnAdd()
                 .HasColumnType("NUMBER")
                 .HasColumnName("ID");
-            entity.Property(e => e.Available)
-                .HasDefaultValueSql("1")
-                .HasColumnType("NUMBER(1)")
-                .HasColumnName("AVAILABLE");
             entity.Property(e => e.CategoryId)
                 .HasColumnType("NUMBER")
                 .HasColumnName("CATEGORY_ID");
@@ -227,6 +285,9 @@ public partial class ModelContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("IMAGE_URL");
+            entity.Property(e => e.Inventory)
+                .HasColumnType("NUMBER")
+                .HasColumnName("INVENTORY");
             entity.Property(e => e.Name)
                 .HasMaxLength(150)
                 .IsUnicode(false)
@@ -242,11 +303,11 @@ public partial class ModelContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("SYS_C008670");
+            entity.HasKey(e => e.Id).HasName("SYS_C009047");
 
             entity.ToTable("User");
 
-            entity.HasIndex(e => e.Username, "SYS_C008671").IsUnique();
+            entity.HasIndex(e => e.Username, "SYS_C009048").IsUnique();
 
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd()
@@ -254,7 +315,6 @@ public partial class ModelContext : DbContext
                 .HasColumnName("ID");
             entity.Property(e => e.Active)
                 .HasDefaultValueSql("1\n")
-                .HasColumnType("NUMBER(1)")
                 .HasColumnName("ACTIVE");
             entity.Property(e => e.Name)
                 .HasMaxLength(100)

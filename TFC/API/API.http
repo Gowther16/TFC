@@ -3,20 +3,3 @@
 POST {{API_HostAddress}}/OrderApi/CreateOrder
 Content-Type: application/json
 
-{
-  "customer": {
-    "name": "Nguyễn Văn A",
-    "phone": "0123456789",
-    "email": "a@example.com"
-  },
-  "totalAmount": 100000,
-  "items": [
-    {
-      "id": "1",
-      "type": "product",
-      "quantity": 2,
-      "price": 50000,
-      "name": "Sản phẩm A"
-    }
-  ]
-}

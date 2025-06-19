@@ -1,0 +1,94 @@
+﻿
+body {
+    font-family: 'Roboto', sans-serif;
+    padding-top: 80px; /* Space for fixed navbar */
+}
+
+.hero-bg {
+    background-image: url('../Content/Bg0.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+}
+.btn-custom {
+    background-color: #ffc115;
+    border-color: #ffc115;
+}
+
+    .btn-custom:hover {
+        background-color: #ff9600;
+        border-color: #ff9600;
+    }
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+}
+@media (max-width: 960px) {
+    .hero-bg {
+        background-image: url('../Content/Bg0_mb.jpg');
+        background-position: top;
+    }
+}
+.nav-category-item {
+    position: relative;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+}
+
+    .nav-category-item.active {
+        color: #dc3545 !important;
+        border-bottom: 3px solid #dc3545 !important;
+        background-color: rgba(220, 53, 69, 0.1);
+        font-weight: 600;
+    }
+
+    .nav-category-item:hover {
+        color: #dc3545 !important;
+        background-color: rgba(220, 53, 69, 0.05);
+        transition: all 0.3s ease;
+    }
+
+/* Product card styling */
+.product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+/* Category title styling */
+.category-title {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+    .category-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background-color: #dc3545;
+        border-radius: 2px;
+    }
+
+.navbar-categories {
+    position: fixed !important;
+    top: 40px;
+    left: 0;
+    right: 0;
+    z-index: 1020;
+    background-color: white !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.nav-category-item.active {
+    color: #dc3545 !important;
+    border-bottom: 3px solid #dc3545 !important;
+    background-color: rgba(220, 53, 69, 0.1);
+    font-weight: 600;
+}

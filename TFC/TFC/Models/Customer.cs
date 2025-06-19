@@ -9,8 +9,6 @@ public partial class Customer
 
     public string Name { get; set; } = null!;
 
-    public string? Phone { get; set; }
-
     public string? Email { get; set; }
 
     public DateTime? CreatedAt { get; set; }

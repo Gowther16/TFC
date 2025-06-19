@@ -15,11 +15,13 @@ public partial class Product
 
     public string? ImageUrl { get; set; }
 
-    public bool? Available { get; set; }
+    public decimal? Inventory { get; set; }
 
     public decimal? CategoryId { get; set; }
 
     public virtual Category? Category { get; set; }
+
+    public virtual ICollection<Comboitem> Comboitems { get; set; } = new List<Comboitem>();
 
     public virtual ICollection<Orderitem> Orderitems { get; set; } = new List<Orderitem>();
 }

@@ -1,0 +1,31 @@
+﻿/* Thêm vào CSS để debug */
+#ordersContainer {
+    border: 3px solid red !important;
+    background-color: rgba(255, 0, 0, 0.1) !important;
+    min-height: 100px !important;
+}
+
+#ordersList {
+    border: 2px solid blue !important;
+    background-color: rgba(0, 0, 255, 0.1) !important;
+    min-height: 50px !important;
+}
+
+.order-card {
+    border: 2px solid green !important;
+    background-color: rgba(0, 255, 0, 0.1) !important;
+    min-height: 200px !important;
+    margin-bottom: 10px !important;
+}
+
+/* Force show để test */
+.force-visible {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    position: static !important;
+    transform: none !important;
+}

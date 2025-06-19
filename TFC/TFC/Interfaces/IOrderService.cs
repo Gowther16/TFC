@@ -1,7 +1,7 @@
 ﻿using TFC.DTOs;
 using static TFC.DTOs.FindOrderDTO;
 
-namespace TFC.Services
+namespace TFC.Interfaces
 {
     public interface IOrderService
     {
