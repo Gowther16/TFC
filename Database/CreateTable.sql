@@ -76,7 +76,7 @@ CREATE TABLE "Order" (
     total_amount NUMBER(10, 2) DEFAULT 0,
     status VARCHAR2(20) DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    
+    updated_at TIMESTAMP,
     CONSTRAINT fk_order_customer FOREIGN KEY (customer_id) REFERENCES Customer(id),
     CONSTRAINT fk_order_table FOREIGN KEY (table_id) REFERENCES OrderTable(id)
 );

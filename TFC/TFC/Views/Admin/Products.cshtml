@@ -1,0 +1,269 @@
+﻿@{
+    ViewData["Title"] = "Quản Lý Sản Phẩm";
+}
+
+<div class="container-fluid" style="margin-top: 80px;">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0">
+                    <i class="fas fa-shopping-bag text-primary"></i> Quản Lý Sản Phẩm
+                </h2>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                    <i class="fas fa-plus"></i> Thêm Sản Phẩm
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter và Search -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                <input type="text" class="form-control" id="searchInput" placeholder="Tìm kiếm sản phẩm...">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <select class="form-select" id="categoryFilter">
+                <option value="">Tất cả danh mục</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select class="form-select" id="statusFilter">
+                <option value="">Tất cả trạng thái</option>
+                <option value="available">Còn hàng</option>
+                <option value="out_of_stock">Hết hàng</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-outline-secondary w-100" id="clearFilters">
+                <i class="fas fa-times"></i> Xóa lọc
+            </button>
+        </div>
+    </div>
+
+    <!-- Products Table -->
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="fas fa-list"></i> Danh Sách Sản Phẩm</h5>
+        </div>
+        <div class="card-body p-0">
+            <!-- Table -->
+            <div class="table-responsive">
+                <table class="table table-hover mb-0" id="productsTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width: 60px;">ID</th>
+                            <th style="width: 80px;">Hình ảnh</th>
+                            <th>Tên sản phẩm</th>
+                            <th style="width: 120px;">Danh mục</th>
+                            <th style="width: 100px;">Giá</th>
+                            <th style="width: 80px;">Tồn kho</th>
+                            <th style="width: 100px;">Trạng thái</th>
+                            <th style="width: 150px;">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        <!-- Data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="loadingSpinnerP" class="text-center my-3">
+                <div class="spinner-border text-primary" role="status"></div>
+                <div class="mt-2">Đang tải dữ liệu...</div>
+            </div>
+            <!-- Empty State -->
+            <div class="text-center p-5 d-none" id="emptyState">
+                <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+                <h5 class="text-muted">Không có sản phẩm nào</h5>
+                <p class="text-muted">Nhấn "Thêm Sản Phẩm" để tạo sản phẩm đầu tiên</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    <nav aria-label="Products pagination" class="mt-4">
+        <ul class="pagination justify-content-center" id="pagination">
+            <!-- Pagination will be generated here -->
+        </ul>
+    </nav>
+</div>
+
+<!-- Add Product Modal -->
+<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addProductModalLabel">
+                    <i class="fas fa-plus text-success"></i> Thêm Sản Phẩm Mới
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="addProductForm">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="addProductName" class="form-label">Tên sản phẩm *</label>
+                                <input type="text" class="form-control" id="addProductName" name="name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="addProductCategory" class="form-label">Danh mục</label>
+                                <select class="form-select" id="addProductCategory" name="categoryID">
+                                    <option value="">Chọn danh mục</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="addProductDescription" class="form-label">Mô tả</label>
+                        <textarea class="form-control" id="addProductDescription" name="description" rows="3"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="addProductPrice" class="form-label">Giá *</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="addProductPrice" name="price" min="0" step="0.01" required>
+                                    <span class="input-group-text">VND</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="addProductStock" class="form-label">Số lượng tồn kho *</label>
+                                <input type="number" class="form-control" id="addProductStock" name="stockQuantity" min="0" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="addProductImage" class="form-label">URL Hình ảnh</label>
+                                <input type="url" class="form-control" id="addProductImage" name="imageUrl">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Image Preview -->
+                    <div class="mb-3" id="imagePreview" style="display: none;">
+                        <label class="form-label">Xem trước:</label>
+                        <div class="text-center">
+                            <img id="previewImg" src="" alt="Preview" class="img-thumbnail" style="max-width: 200px; max-height: 200px;">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Lưu Sản Phẩm
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Product Modal -->
+<div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProductModalLabel">
+                    <i class="fas fa-edit text-warning"></i> Chỉnh Sửa Sản Phẩm
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="editProductForm">
+                <input type="hidden" id="editProductId" name="id">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editProductName" class="form-label">Tên sản phẩm *</label>
+                                <input type="text" class="form-control" id="editProductName" name="name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editProductCategory" class="form-label">Danh mục</label>
+                                <select class="form-select" id="editProductCategory" name="categoryID">
+                                    <option value="">Chọn danh mục</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editProductDescription" class="form-label">Mô tả</label>
+                        <textarea class="form-control" id="editProductDescription" name="description" rows="3"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="editProductPrice" class="form-label">Giá *</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="editProductPrice" name="price" min="0" step="0.01" required>
+                                    <span class="input-group-text">VND</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="editProductStock" class="form-label">Số lượng tồn kho *</label>
+                                <input type="number" class="form-control" id="editProductStock" name="stockQuantity" min="0" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="editProductImage" class="form-label">URL Hình ảnh</label>
+                                <input type="url" class="form-control" id="editProductImage" name="imageUrl">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Image Preview -->
+                    <div class="mb-3" id="editImagePreview" style="display: none;">
+                        <label class="form-label">Xem trước:</label>
+                        <div class="text-center">
+                            <img id="editPreviewImg" src="" alt="Preview" class="img-thumbnail" style="max-width: 200px; max-height: 200px;">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-warning" id="saveEditProductBtn">
+                        <i class="fas fa-save"></i> Cập Nhật
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteProductModalLabel">
+                    <i class="fas fa-trash text-danger"></i> Xác Nhận Xóa
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
+                    <h5>Bạn có chắc chắn muốn xóa sản phẩm này?</h5>
+                    <p class="text-muted" id="deleteProductName">Tên sản phẩm sẽ hiển thị ở đây</p>
+                    <p class="text-danger"><strong>Hành động này không thể hoàn tác!</strong></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteProduct">
+                    <i class="fas fa-trash"></i> Xóa Sản Phẩm
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/Admin_Product.js"></script>

@@ -45,7 +45,7 @@ public partial class ModelContext : DbContext
 
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("SYS_C009029");
+            entity.HasKey(e => e.Id).HasName("SYS_C009072");
 
             entity.ToTable("CATEGORY");
 
@@ -65,7 +65,7 @@ public partial class ModelContext : DbContext
 
         modelBuilder.Entity<Combo>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("SYS_C009038");
+            entity.HasKey(e => e.Id).HasName("SYS_C009081");
 
             entity.ToTable("COMBO");
 
@@ -96,7 +96,7 @@ public partial class ModelContext : DbContext
 
         modelBuilder.Entity<Comboitem>(entity =>
         {
-            entity.HasKey(e => new { e.ComboId, e.ProductId }).HasName("SYS_C009039");
+            entity.HasKey(e => new { e.ComboId, e.ProductId }).HasName("SYS_C009082");
 
             entity.ToTable("COMBOITEM");
 
@@ -124,7 +124,7 @@ public partial class ModelContext : DbContext
 
         modelBuilder.Entity<Customer>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("SYS_C009057");
+            entity.HasKey(e => e.Id).HasName("SYS_C009100");
 
             entity.ToTable("CUSTOMER");
 
@@ -148,7 +148,7 @@ public partial class ModelContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("SYS_C009060");
+            entity.HasKey(e => e.Id).HasName("SYS_C009122");
 
             entity.ToTable("Order");
 
@@ -179,6 +179,9 @@ public partial class ModelContext : DbContext
                 .HasDefaultValueSql("0")
                 .HasColumnType("NUMBER(10,2)")
                 .HasColumnName("TOTAL_AMOUNT");
+            entity.Property(e => e.UpdatedAt)
+                .HasPrecision(6)
+                .HasColumnName("UPDATED_AT");
 
             entity.HasOne(d => d.Customer).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.CustomerId)
@@ -191,7 +194,7 @@ public partial class ModelContext : DbContext
 
         modelBuilder.Entity<Orderitem>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("SYS_C009066");
+            entity.HasKey(e => e.Id).HasName("SYS_C009109");
 
             entity.ToTable("ORDERITEM");
 
@@ -220,11 +223,6 @@ public partial class ModelContext : DbContext
                 .HasForeignKey(d => d.ComboId)
                 .HasConstraintName("FK_ORDERITEM_COMBO");
 
-            entity.HasOne(d => d.Order).WithMany(p => p.Orderitems)
-                .HasForeignKey(d => d.OrderId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ORDERITEM_ORDER");
-
             entity.HasOne(d => d.Product).WithMany(p => p.Orderitems)
                 .HasForeignKey(d => d.ProductId)
                 .HasConstraintName("FK_ORDERITEM_PRODUCT");
@@ -232,11 +230,11 @@ public partial class ModelContext : DbContext
 
         modelBuilder.Entity<Ordertable>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("SYS_C009053");
+            entity.HasKey(e => e.Id).HasName("SYS_C009096");
 
             entity.ToTable("ORDERTABLE");
 
-            entity.HasIndex(e => e.TableNumber, "SYS_C009054").IsUnique();
+            entity.HasIndex(e => e.TableNumber, "SYS_C009097").IsUnique();
 
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd()
@@ -266,7 +264,7 @@ public partial class ModelContext : DbContext
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("SYS_C009033");
+            entity.HasKey(e => e.Id).HasName("SYS_C009076");
 
             entity.ToTable("PRODUCT");
 
@@ -303,11 +301,11 @@ public partial class ModelContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("SYS_C009047");
+            entity.HasKey(e => e.Id).HasName("SYS_C009118");
 
             entity.ToTable("User");
 
-            entity.HasIndex(e => e.Username, "SYS_C009048").IsUnique();
+            entity.HasIndex(e => e.Username, "SYS_C009119").IsUnique();
 
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd()

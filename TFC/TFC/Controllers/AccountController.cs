@@ -48,8 +48,12 @@ namespace TFC.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userService.GetUserByUsernameAsync(model.Username);
+                if (!user.Active.Equals(1))
+                {
+                    ModelState.AddModelError("", "Tài khoản của bạn đã bị vô hiệu hóa, hãy liên hệ admin để có thể kích hoạt.");
 
-                if (user != null && VerifyPassword(model.Password, user.PasswordHash))
+                }
+                else if (user != null && user.Active.Equals(1) && VerifyPassword(model.Password, user.PasswordHash))
                 {
                     var claims = new List<Claim>
                     {
@@ -188,15 +192,13 @@ namespace TFC.Controllers
                 if (user == null)
                     return NotFound();
 
-                // Verify current password
                 if (!VerifyPassword(model.CurrentPassword, user.PasswordHash))
                 {
                     ModelState.AddModelError("CurrentPassword", "Mật khẩu hiện tại không đúng.");
                     return View(model);
                 }
 
-                // Update password (trong thực tế nên hash password)
-                user.PasswordHash = model.NewPassword;
+                user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.NewPassword);
 
                 if (await _userService.UpdateUserAsync(user))
                 {
@@ -211,10 +213,16 @@ namespace TFC.Controllers
 
             return View(model);
         }
-
         private bool VerifyPassword(string password, string hash)
         {
-            return password == hash;
+            try
+            {
+                return BCrypt.Net.BCrypt.Verify(password, hash);
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 

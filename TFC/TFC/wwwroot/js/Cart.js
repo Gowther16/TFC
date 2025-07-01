@@ -17,10 +17,6 @@ let customerModal = null;
 
 /*========================================= INITIALIZATION =========================================*/
 
-/**
- * DOM Content Loaded Event Handler
- * Initializes the application when the page is fully loaded
- */
 document.addEventListener('DOMContentLoaded', function () {
     // Initialize Bootstrap modals
     cartModal = new bootstrap.Modal(document.getElementById('cart-modal'));
@@ -37,10 +33,6 @@ document.addEventListener('DOMContentLoaded', function () {
     addCustomStyles();
 });
 
-/**
- * Setup form event handlers
- * Configures form submission and validation
- */
 function setupFormHandlers() {
     const customerForm = document.getElementById('customer-form');
     if (customerForm) {
@@ -57,10 +49,6 @@ function setupFormHandlers() {
 
 /*========================================= DATA LOADING =========================================*/
 
-/**
- * Load inventory data from HTML page
- * Parses product cards to extract inventory information
- */
 function loadInventoryFromPage() {
     const productCards = document.querySelectorAll('.product-card');
     productCards.forEach(card => {
@@ -100,10 +88,6 @@ function loadInventoryFromPage() {
     });
 }
 
-/**
- * Load combo items data from HTML page
- * Parses combo product cards to extract component items
- */
 function loadComboItemsFromPage() {
     const comboCards = document.querySelectorAll('.product-card');
     comboCards.forEach(card => {
@@ -130,10 +114,6 @@ function loadComboItemsFromPage() {
 
 /*========================================= INVENTORY VALIDATION =========================================*/
 
-/**
- * Check if combo can be added to cart
- * Validates that all required items are available in sufficient quantities
- */
 function canAddComboToCart(comboUniqueId, quantityToAdd = 1) {
     const items = comboItems[comboUniqueId];
     if (!items) {
@@ -177,10 +157,6 @@ function canAddComboToCart(comboUniqueId, quantityToAdd = 1) {
     return true;
 }
 
-/**
- * Get information about insufficient combo items
- * Returns array of items that are not available in sufficient quantities
- */
 function getInsufficientitems(comboUniqueId, quantityToAdd = 1) {
     const items = comboItems[comboUniqueId];
     if (!items) {
@@ -228,10 +204,6 @@ function getInsufficientitems(comboUniqueId, quantityToAdd = 1) {
     return insufficientitems;
 }
 
-/**
- * Get product name from unique key
- * Helper function to retrieve product name from DOM
- */
 function getProductNameFromKey(productKey) {
     const productCards = document.querySelectorAll('.product-card');
     for (const card of productCards) {
@@ -252,10 +224,6 @@ function getProductNameFromKey(productKey) {
     return productKey;
 }
 
-/**
- * Validate inventory before checkout
- * Final validation of all cart items before proceeding to payment
- */
 function validateInventoryBeforeCheckout() {
     // Check inventory for individual products
     for (const item of cart) {
@@ -288,10 +256,6 @@ function validateInventoryBeforeCheckout() {
 
 /*========================================= CART MANAGEMENT =========================================*/
 
-/**
- * Add item to cart
- * Main function to add products or combos to the shopping cart
- */
 function addToCart(id, name, price, description, type = 'product') {
     const uniqueId = `${type}_${id}`;
 
@@ -349,20 +313,12 @@ function addToCart(id, name, price, description, type = 'product') {
     showAddToCartMessage(name);
 }
 
-/**
- * Remove item from cart
- * Completely removes an item from the shopping cart
- */
 function removeFromCart(uniqueId) {
     cart = cart.filter(item => item.uniqueId !== uniqueId);
     updateCartDisplay();
     updateCartCount();
 }
 
-/**
- * Update item quantity in cart
- * Increases or decreases the quantity of an item in the cart
- */
 function updateQuantity(uniqueId, change) {
     const item = cart.find(item => item.uniqueId === uniqueId);
     if (item) {
@@ -400,10 +356,6 @@ function updateQuantity(uniqueId, change) {
     }
 }
 
-/**
- * Clear entire cart
- * Removes all items from the shopping cart
- */
 function clearCart() {
     cart = [];
     updateCartDisplay();
@@ -413,10 +365,6 @@ function clearCart() {
 
 /*========================================= CART DISPLAY =========================================*/
 
-/**
- * Update cart item count badge
- * Updates the cart count badge in the navigation
- */
 function updateCartCount() {
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     const cartCountElement = document.getElementById('cart-count');
@@ -426,10 +374,6 @@ function updateCartCount() {
     }
 }
 
-/**
- * Update cart modal display
- * Refreshes the cart modal content with current cart items
- */
 function updateCartDisplay() {
     const cartItemsContainer = document.getElementById('cart-items');
     const cartFooter = document.getElementById('cart-total');
@@ -488,10 +432,6 @@ function updateCartDisplay() {
     }
 }
 
-/**
- * Toggle cart modal visibility
- * Shows or hides the cart modal
- */
 function toggleCart() {
     if (cartModal) {
         cartModal.toggle();
@@ -501,10 +441,7 @@ function toggleCart() {
 
 /*========================================= CUSTOMER FORM =========================================*/
 
-/**
- * Show customer information form
- * Displays the customer form modal for checkout
- */
+
 function showCustomerForm() {
     if (cart.length === 0) {
         alert('Giỏ hàng trống!');
@@ -515,21 +452,17 @@ function showCustomerForm() {
         return;
     }
 
+    resetModalStates();
     updateOrderSummary();
 
     if (cartModal) {
         cartModal.hide();
     }
-
     if (customerModal) {
         customerModal.show();
     }
 }
 
-/**
- * Close customer form modal
- * Closes the customer form and resets all states
- */
 function closeCustomerForm() {
     clearPaymentTimers();
 
@@ -546,10 +479,7 @@ function closeCustomerForm() {
     resetModalStates();
 }
 
-/**
- * Update order summary display
- * Refreshes the order summary in the customer form
- */
+
 function updateOrderSummary() {
     const summaryContainer = document.getElementById('order-summary-items');
     const totalAmountSpan = document.getElementById('order-total-amount');
@@ -575,10 +505,6 @@ function updateOrderSummary() {
 
 /*========================================= FORM VALIDATION =========================================*/
 
-/**
- * Validate customer form
- * Validates customer name and email fields
- */
 function validateForm() {
     clearErrors();
     let isValid = true;
@@ -603,10 +529,6 @@ function validateForm() {
     return isValid;
 }
 
-/**
- * Clear form validation errors
- * Removes error messages and styling from form fields
- */
 function clearErrors() {
     const nameError = document.getElementById('name-error');
     const emailError = document.getElementById('email-error');
@@ -622,10 +544,6 @@ function clearErrors() {
 
 /*========================================= PAYMENT FLOW =========================================*/
 
-/**
- * Create payment QR code element
- * Generates and displays the QR code for payment
- */
 function createPaymentQRElement() {
     const existingQR = document.getElementById('payment-qr');
     if (existingQR) {
@@ -666,10 +584,6 @@ function createPaymentQRElement() {
     modalBody.appendChild(paymentQR);
 }
 
-/**
- * Show payment QR code
- * Displays the QR code payment interface
- */
 function showPaymentQR() {
     createPaymentQRElement();
 
@@ -696,10 +610,6 @@ function showPaymentQR() {
     }, 10000);
 }
 
-/**
- * Hide payment QR code
- * Hides the QR code payment interface
- */
 function hidePaymentQR() {
     const paymentQR = document.getElementById('payment-qr');
     if (paymentQR) {
@@ -707,10 +617,6 @@ function hidePaymentQR() {
     }
 }
 
-/**
- * Start payment countdown timer
- * Shows countdown timer for payment timeout
- */
 function startPaymentCountdown() {
     let timeLeft = 10;
     const timerElement = document.getElementById('payment-timer');
@@ -731,10 +637,6 @@ function startPaymentCountdown() {
     }, 1000);
 }
 
-/**
- * Show loading animation
- * Displays loading screen during order processing
- */
 function showCartLoading() {
     hidePaymentQR();
     const loadingElement = document.getElementById('loading');
@@ -748,21 +650,19 @@ function showCartLoading() {
     }, 3000);
 }
 
-/**
- * Hide loading animation
- * Hides the loading screen
- */
 function hideCartLoading() {
     const loadingElement = document.getElementById('loading');
     if (loadingElement) {
         loadingElement.classList.add('d-none');
     }
 }
+function hideSuccessMessage() {
+    const successMessage = document.getElementById('success-message');
+    if (successMessage) {
+        successMessage.classList.add('d-none');
+    }
+}
 
-/**
- * Clear all payment timers
- * Clears all active timers used in payment flow
- */
 function clearPaymentTimers() {
     if (paymentTimer) {
         clearTimeout(paymentTimer);
@@ -778,19 +678,18 @@ function clearPaymentTimers() {
     }
 }
 
-/**
- * Reset modal states
- * Resets all modal elements to their initial state
- */
 function resetModalStates() {
     const customerForm = document.getElementById('customer-form');
     const formActions = document.getElementById('form-actions');
-
+    const orderSummary = document.querySelector('.order-summary');
     if (customerForm) {
         customerForm.style.display = 'block';
     }
     if (formActions) {
         formActions.style.display = 'flex';
+    }
+    if (orderSummary) {
+        orderSummary.style.display = 'block'; 
     }
 
     hidePaymentQR();
@@ -799,26 +698,17 @@ function resetModalStates() {
 }
 
 /*========================================= ORDER PROCESSING =========================================*/
-/**
- * Function to add product to cart
- */
+
 function addProductToCart(id, name, price, description) {
     addToCart(id, name, price, description, 'product');
 }
 
-/**
- * Function to add combo to cart
- */
 function addComboToCart(id, name, price, description) {
     addToCart(id, name, price, description, 'combo');
 }
 
 /*==================== ORDER PROCESSING FUNCTIONS ====================*/
-/**
- * Main order processing function
- * Handles successful order submission to the server
- * Validates order data, sends to API, and handles response
- */
+
 async function processOrderWithSuccess() {
     const orderData = {
         customer: {
@@ -849,6 +739,7 @@ async function processOrderWithSuccess() {
         if (response.ok && result.success) {
             updateInventoryAfterOrder();
             showSuccessMessage(result.orderCode);
+            clearCart();
         } else {
             throw new Error(result.message || 'Có lỗi xảy ra khi đặt món');
         }
@@ -858,11 +749,7 @@ async function processOrderWithSuccess() {
 }
 
 /*==================== INVENTORY MANAGEMENT FUNCTIONS ====================*/
-/**
- * Update inventory data after successful order
- * Decrements inventory quantities for ordered items
- * Handles both regular products and combo items
- */
+
 function updateInventoryAfterOrder() {
     cart.forEach(item => {
         if (item.type === 'product') {
@@ -893,11 +780,6 @@ function updateInventoryAfterOrder() {
     updateInventoryDisplayOnPage();
 }
 
-/**
- * Update product cards display to reflect current inventory levels
- * Updates inventory text, disables out-of-stock buttons, adds overlays
- * Handles both regular products and combo availability
- */
 function updateInventoryDisplayOnPage() {
     // Update inventory display for all affected products
     Object.keys(inventoryData).forEach(uniqueId => {
@@ -980,10 +862,7 @@ function updateInventoryDisplayOnPage() {
 }
 
 /*==================== UI FEEDBACK FUNCTIONS ====================*/
-/**
- * Display success message after successful order
- * Shows order confirmation with order code and hides form actions
- */
+
 function showSuccessMessage(orderCode) {
     hideCartLoading();
 
@@ -1002,10 +881,6 @@ function showSuccessMessage(orderCode) {
     }
 }
 
-/**
- * Display error message when order fails
- * Shows error alert and creates error message element in modal
- */
 function showErrorMessage(message) {
     hideCartLoading();
 
@@ -1026,10 +901,7 @@ function showErrorMessage(message) {
 }
 
 /*==================== TOAST NOTIFICATION FUNCTIONS ====================*/
-/**
- * Show success toast when item is added to cart
- * Displays temporary notification with product name
- */
+
 function showAddToCartMessage(productName) {
     // Remove existing messages to prevent overlap
     const existingMessages = document.querySelectorAll('.cart-toast-message');
@@ -1067,10 +939,6 @@ function showAddToCartMessage(productName) {
     }, 3000);
 }
 
-/**
- * Show error toast for cart-related errors
- * Displays temporary error notification
- */
 function showErrorToast(message) {
     // Remove existing messages to prevent overlap
     const existingMessages = document.querySelectorAll('.cart-toast-message');
@@ -1108,39 +976,42 @@ function showErrorToast(message) {
     }, 4000);
 }
 
+
 /*==================== CSS STYLING ====================*/
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideInRight {
-        from {
-            transform: translateX(100%);
-            opacity: 0;
+function addCustomStyles() {
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
-        to {
-            transform: translateX(0);
-            opacity: 1;
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
         }
-    }
-    
-    @keyframes fadeOut {
-        from {
-            opacity: 1;
+
+        .cart-item:hover {
+            background-color: #f8f9fa;
         }
-        to {
-            opacity: 0;
+
+        .order-item {
+            border-bottom: 1px solid #e9ecef;
         }
-    }
-    
-    .cart-item:hover {
-        background-color: #f8f9fa;
-    }
-    
-    .order-item {
-        border-bottom: 1px solid #e9ecef;
-    }
-    
-    .order-item:last-child {
-        border-bottom: none;
-    }
-`;
-document.head.appendChild(style);
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+    `;
+    document.head.appendChild(style);
+}

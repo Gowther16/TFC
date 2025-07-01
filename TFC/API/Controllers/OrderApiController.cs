@@ -17,7 +17,7 @@ namespace TFC.Controllers
         }
 
         [HttpPost("CreateOrder")]
-        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderRequest request)
+        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderDTO request)
         {
             try
             {

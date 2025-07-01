@@ -1,24 +1,19 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
     // Initialize variables
     let currentOrders = [];
-    let selectedOrderId = null;
 
     // API Configuration
     const API_BASE_URL = 'http://localhost:5014/StaffApi';
 
     // DOM elements
     const loadingState = document.getElementById('loadingState');
-    const ordersContainer = document.getElementById('ordersContainer');
     const emptyState = document.getElementById('emptyState');
-    const ordersList = document.getElementById('ordersList');
+    const ordersListStaff = document.getElementById('ordersListStaff');
     const orderDetailModal = document.getElementById('orderDetailModal');
     const orderDetailContent = document.getElementById('orderDetailContent');
 
     // Initialize page
-    loadOrders();
-
-    // Auto refresh every 60 seconds
-    setInterval(loadOrders, 60000);
+    filterOrders();
 
     // Check for urgent orders every 30 seconds
     setInterval(checkUrgentOrders, 30000);
@@ -33,7 +28,7 @@
         showLoading();
 
         try {
-            const response = await fetch(`${API_BASE_URL}/pending-orders`, {
+            const response = await fetch(`${API_BASE_URL}/orders`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -45,7 +40,7 @@
             }
 
             const result = await response.json();
-
+                
             console.log('API Response:', result);
             console.log('Orders data:', result.data);
 
@@ -67,7 +62,7 @@
         showLoading();
 
         try {
-            const response = await fetch(`${API_BASE_URL}/orders/status/${status}`, {
+            const response = await fetch(`${API_BASE_URL}/orders/${status}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -215,15 +210,19 @@
             if (filterValue === 'all') {
                 await loadOrders();
                 return;
-            } else if (filterValue === 'Pending') {
-                filteredOrders = await loadOrdersByStatus('Pending');
+            } else if (filterValue === 'pending') {
+                const pending = await loadOrdersByStatus('pending');
+                const confirmed = await loadOrdersByStatus('confirmed');
+                filteredOrders = pending.concat(confirmed);
+
             } else if (filterValue === 'urgent') {
-                const pendingOrders = await loadOrdersByStatus('Pending');
+                const pendingOrders = await loadOrdersByStatus('pending');
                 filteredOrders = pendingOrders.filter(order => {
                     const minutesAgo = Math.floor((new Date() - new Date(order.createdAt)) / 60000);
                     return minutesAgo > 15;
                 });
             }
+            
 
             currentOrders = filteredOrders;
             displayOrders(filteredOrders);
@@ -237,33 +236,36 @@
     // Display functions
     function showLoading() {
         loadingState.classList.remove('d-none');
-        ordersContainer.classList.add('d-none');
         emptyState.classList.add('d-none');
+        ordersListStaff.classList.add('d-none');
     }
 
     function displayOrders(orders) {
         console.log('Displaying orders:', orders);
-
-        loadingState.classList.add('d-none');
-
+        document.getElementById('ordersCountText').textContent = `Tổng cộng: ${orders.length} đơn hàng`;
+        // Check if orders are empty display empty state
         if (!orders || orders.length === 0) {
+            loadingState.classList.add('d-none');
             emptyState.classList.remove('d-none');
-            ordersContainer.classList.add('d-none');
+            ordersListStaff.classList.add('d-none');
             return;
         }
-
+        // Hide loading and empty states, show orders container
+        loadingState.classList.add('d-none');
         emptyState.classList.add('d-none');
-        ordersContainer.classList.remove('d-none');
+        ordersListStaff.classList.remove('d-none');
 
+        console.log('ordersListStaff:', ordersListStaff);
         const html = orders.map(order => createOrderCard(order)).join('');
-        ordersList.innerHTML = html;
+        console.log(html);
+        ordersListStaff.innerHTML = html;
     }
 
     function createOrderCard(order) {
         const createdAt = new Date(order.createdAt);
         const timeAgo = getTimeAgo(createdAt);
         const minutesAgo = Math.floor((new Date() - createdAt) / 60000);
-        const isUrgent = minutesAgo > 15;
+        const isUrgent = minutesAgo > 15 && (order.status === 'Pending' || order.status === 'confirmed');
         const itemsCount = order.orderItems?.length || 0;
         const totalItems = order.orderItems?.reduce((sum, item) => sum + item.quantity, 0) || 0;
 
@@ -294,7 +296,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6 text-md-end">
-                                <span class="status-badge status-${order.status?.toLowerCase() || 'Pending'}">
+                                <span class="status-badge status-${order.status?.toLowerCase() || 'pending'}">
                                     ${getStatusText(order.status)}
                                 </span>
                                 <div class="mt-2">
@@ -342,7 +344,7 @@
                                             <i class="fas fa-check me-2"></i>
                                             Chấp nhận
                                         </button>
-                                    ` : (order.status === 'confirmed' || order.status === 'preparing') ? `
+                                    ` : (order.status === 'Confirmed' || order.status === 'confirmed') ? `
                                         <button class="btn btn-complete btn-action" onclick="event.stopPropagation(); completeOrder(${order.id})">
                                             <i class="fas fa-check-double me-2"></i>
                                             Hoàn thành
@@ -359,7 +361,12 @@
 
     function displayOrderDetail(order) {
         const createdAt = new Date(order.createdAt);
-        const minutesAgo = Math.floor((new Date() - createdAt) / 60000);
+        const endTime = (order.status?.toLowerCase() === 'completed' && order.updatedAt)
+            ? new Date(order.updatedAt)
+            : new Date();
+
+        const minutesAgo = Math.floor((endTime - createdAt) / 60000);
+
         const isUrgent = minutesAgo > 15;
 
         orderDetailContent.innerHTML = `
@@ -383,7 +390,7 @@
                 <div class="col-md-6">
                     <h6 class="text-muted">Thời gian & Giá trị</h6>
                     <p><strong>Thời gian đặt:</strong> ${createdAt.toLocaleString('vi-VN')}</p>
-                    <p><strong>Thời gian chờ:</strong> 
+                    <p><strong>Thời gian xử lý:</strong> 
                         <span class="${isUrgent ? 'text-danger fw-bold' : ''}">${minutesAgo} phút</span>
                     </p>
                     <p><strong>Tổng tiền:</strong>
@@ -433,7 +440,7 @@
             acceptBtn.style.display = 'inline-block';
             completeBtn.style.display = 'none';
             acceptBtn.onclick = () => acceptOrder(order.id);
-        } else if (order.status === 'confirmed' || order.status === 'preparing') {
+        } else if (order.status === 'confirmed') {
             acceptBtn.style.display = 'none';
             completeBtn.style.display = 'inline-block';
             completeBtn.onclick = () => completeOrder(order.id);
@@ -486,10 +493,8 @@
 
     function getStatusText(status) {
         const statusMap = {
-            'Pending': 'Chờ xử lý',
+            'pending': 'Chờ xử lý',
             'confirmed': 'Đã xác nhận',
-            'preparing': 'Đang chuẩn bị',
-            'ready': 'Sẵn sàng',
             'completed': 'Hoàn thành',
             'cancelled': 'Đã hủy'
         };

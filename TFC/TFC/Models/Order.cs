@@ -19,9 +19,11 @@ public partial class Order
 
     public DateTime? CreatedAt { get; set; }
 
+    public DateTime? UpdatedAt { get; set; }
+
     public virtual Customer? Customer { get; set; }
 
     public virtual ICollection<Orderitem> Orderitems { get; set; } = new List<Orderitem>();
-
+    
     public virtual Ordertable? Table { get; set; }
 }

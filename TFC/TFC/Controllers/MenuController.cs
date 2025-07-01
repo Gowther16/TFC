@@ -23,7 +23,6 @@ namespace TFC.Controllers
             // Check combo availability based on product inventory
             foreach (var combo in combos)
             {
-                // Sửa: gán giá trị int thay vì bool
                 combo.Available = CheckComboAvailability(combo) ? true : false;
             }
 

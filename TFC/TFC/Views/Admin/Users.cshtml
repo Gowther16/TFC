@@ -1,0 +1,160 @@
+﻿@{
+    ViewData["Title"] = ViewBag.Title;
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">@ViewBag.Title <i class="fa-solid fa-user-pen"></i> </h4>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userModal">
+                        <i class="fa-solid fa-user-plus"></i> Thêm người dùng
+                    </button>
+                </div>
+                <div class="card-body">
+                    <!-- Search and Filter -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="searchInput" placeholder="Tìm kiếm theo tên hoặc username...">
+                                <button class="btn btn-outline-secondary" type="button" id="searchBtn">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select" id="roleFilter">
+                                <option value="">Tất cả vai trò</option>
+                                <option value="admin">Admin</option>
+                                <option value="staff">Staff</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select" id="statusFilter">
+                                <option value="">Tất cả trạng thái</option>
+                                <option value="1">Hoạt động</option>
+                                <option value="0">Không hoạt động</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Users Table -->
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tên</th>
+                                    <th>Username</th>
+                                    <th>Vai trò</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="loadingSpinnerA" class="text-center my-3">
+                        <div class="spinner-border text-primary" role="status"></div>
+                        <div class="mt-2">Đang tải người dùng...</div>
+                    </div>
+
+                    <!-- No data message -->
+                    <div id="noDataMessage" class="text-center text-muted" style="display: none;">
+                        <i class="fas fa-users fa-3x mb-3"></i>
+                        <h5>Không có dữ liệu người dùng</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- User Modal -->
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="userModalLabel">Thêm người dùng mới</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="userForm">
+                <div class="modal-body">
+                    <input type="hidden" id="userId" name="id">
+
+                    <div class="mb-3">
+                        <label for="userName" class="form-label">Tên hiển thị <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="userName" name="name" required>
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="userUsername" class="form-label">Username <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="userUsername" name="username" required>
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <div class="mb-3" id="passwordField">
+                        <label for="userPassword" class="form-label">Mật khẩu <span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="userPassword" name="password" required>
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="userRole" class="form-label">Vai trò <span class="text-danger">*</span></label>
+                        <select class="form-select" id="userRole" name="role" required>
+                            <option value="">Chọn vai trò</option>
+                            <option value="admin">Admin</option>
+                            <option value="staff">Staff</option>
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="userStatus" class="form-label">Trạng thái <span class="text-danger">*</span></label>
+                        <select class="form-select" id="userStatus" name="status" required>
+                            <option value="">Chọn trạng thái</option>
+                            <option value="active">Hoạt động</option>
+                            <option value="inactive">Không hoạt động</option>
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary" id="saveUserBtn">
+                        <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                        Lưu
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteUserModalLabel">Xác nhận xóa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn muốn xóa người dùng <strong id="deleteUserName"></strong>?</p>
+                <p class="text-muted">Hành động này không thể hoàn tác.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteUserBtn">
+                    <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                    Xóa
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/Admin_User.js"></script>

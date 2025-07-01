@@ -2,7 +2,7 @@
 
 namespace TFC.DTOs
 {
-    public class CreateOrderRequest
+    public class CreateOrderDTO
     {
         [Required]
         public CustomerInfo Customer { get; set; } = null!;

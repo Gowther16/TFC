@@ -5,7 +5,7 @@ namespace TFC.Interfaces
 {
     public interface IOrderService
     {
-        Task<CreateOrderResult> CreateOrderAsync(CreateOrderRequest request);
+        Task<CreateOrderResult> CreateOrderAsync(CreateOrderDTO request);
         Task<GetOrdersByOrderCodeResult> GetOrdersByOrderCodeAsync(string OrderCode);
     }
 

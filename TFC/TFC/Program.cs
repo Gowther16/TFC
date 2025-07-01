@@ -14,6 +14,8 @@ builder.Services.AddDbContext<ModelContext>(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IStaffService, StaffService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 
 // Add Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -41,7 +43,6 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// Add Authentication & Authorization middleware
 app.UseAuthentication();
 app.UseAuthorization();
 

@@ -15,12 +15,12 @@ namespace TFC.Services
 
         public async Task<User?> GetUserByIdAsync(decimal id)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id && u.Active.Equals(1));
+            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public async Task<User?> GetUserByUsernameAsync(string username)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Username == username && u.Active.Equals(1));
+            return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
         }
 
         public async Task<bool> ValidateUserAsync(string username, string password)

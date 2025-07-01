@@ -15,7 +15,7 @@ namespace TFC.Services
             _context = context;
         }
 
-        public async Task<CreateOrderResult> CreateOrderAsync(CreateOrderRequest request)
+        public async Task<CreateOrderResult> CreateOrderAsync(CreateOrderDTO request)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
 
@@ -24,12 +24,13 @@ namespace TFC.Services
                 var customer = await FindOrCreateCustomerAsync(request.Customer);
 
                 var orderCode = GenerateOrderCode();
-                var TotalA = request.Items.Sum(item => item.Price * item.Quantity);
+                var totalAmount = request.Items.Sum(item => item.Price * item.Quantity);
+
                 var order = new Order
                 {
                     OrderCode = orderCode,
                     CustomerId = customer.Id,
-                    TotalAmount = TotalA,
+                    TotalAmount = totalAmount,
                     Status = "Pending",
                     CreatedAt = DateTime.Now
                 };
@@ -53,28 +54,41 @@ namespace TFC.Services
                     if (item.Type.ToLower() == "product")
                     {
                         var productId = decimal.Parse(item.Id);
-                        var productCount = await _context.Products.CountAsync(p => p.Id == productId);
+                        var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == productId);
 
-                        if (productCount == 0)
-                        {
+                        if (product == null)
                             throw new Exception($"Sản phẩm với ID {item.Id} không tồn tại");
-                        }
 
                         orderItem.ProductId = productId;
-                        orderItem.ComboId = null;
+
+                        if (product.Inventory.HasValue)
+                        {
+                            product.Inventory -= item.Quantity;
+                            if (product.Inventory < 0) product.Inventory = 0;
+                        }
                     }
                     else if (item.Type.ToLower() == "combo")
                     {
                         var comboId = decimal.Parse(item.Id);
-                        var comboCount = await _context.Combos.CountAsync(c => c.Id == comboId);
+                        var combo = await _context.Combos
+                            .Include(c => c.Comboitems)
+                            .ThenInclude(ci => ci.Product)
+                            .FirstOrDefaultAsync(c => c.Id == comboId);
 
-                        if (comboCount == 0)
-                        {
+                        if (combo == null)
                             throw new Exception($"Combo với ID {item.Id} không tồn tại");
-                        }
 
                         orderItem.ComboId = comboId;
-                        orderItem.ProductId = null;
+
+                        foreach (var comboItem in combo.Comboitems)
+                        {
+                            var product = comboItem.Product;
+                            if (product != null && product.Inventory.HasValue)
+                            {
+                                product.Inventory -= comboItem.Quantity * item.Quantity;
+                                if (product.Inventory < 0) product.Inventory = 0;
+                            }
+                        }
                     }
                     else
                     {
@@ -85,6 +99,7 @@ namespace TFC.Services
                 }
 
                 _context.Orderitems.AddRange(orderItems);
+
                 await _context.SaveChangesAsync();
 
                 await transaction.CommitAsync();
@@ -99,7 +114,6 @@ namespace TFC.Services
             catch (Exception ex)
             {
                 await transaction.RollbackAsync();
-
                 return new CreateOrderResult
                 {
                     Success = false,
@@ -107,6 +121,7 @@ namespace TFC.Services
                 };
             }
         }
+
         public async Task<GetOrdersByOrderCodeResult> GetOrdersByOrderCodeAsync(string OrderCode)
         {
             try

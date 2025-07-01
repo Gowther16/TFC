@@ -336,6 +336,6 @@ INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (24, 29, 1); -- Kh
 INSERT INTO ComboItem (combo_id, product_id, quantity) VALUES (24, 41, 5); -- Pepsi (Tiêu Chuẩn) x5
 
 -- ===== User =====
-INSERT INTO "User" (name, username, password_hash, role) VALUES('Administrator','Admin', 'Admin123', 'admin');
-INSERT INTO "User" (name, username, password_hash, role) VALUES('Staff1','Staff1', 'Staff123', 'staff');
+INSERT INTO "User" (name, username, password_hash, role) VALUES('Administrator','Admin', '$2a$12$QKJD5hy5YIWy8MVApXvk/uHDn2Cm.SXmGvb5y.PhGH1Ra4FT86HMK', 'admin');
+INSERT INTO "User" (name, username, password_hash, role) VALUES('Staff1','Staff1', '$2a$12$EM8WgTDvanSvbwaJcs9uQOwwDvW8j.2kKbiBOMXBeQTE2NJ6fct26', 'staff');
 

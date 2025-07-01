@@ -16,6 +16,9 @@ builder.Services.AddCors(options =>
 });
 // Add services to the container.
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IStaffService, StaffService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
+
 
 builder.Services.AddDbContext<ModelContext>(options =>
     options.UseOracle(builder.Configuration.GetConnectionString("DBConnect")));
@@ -36,7 +39,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+//app.UseAuthorization();
 
 app.MapControllers();
 

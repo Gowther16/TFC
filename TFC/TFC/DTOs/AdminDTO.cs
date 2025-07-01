@@ -2,7 +2,7 @@
 
 namespace TFC.DTOs
 {
-    public class AdminDTOs
+    public class AdminDTO
     {
         // ViewModels cho Admin Controller
 
@@ -35,24 +35,30 @@ namespace TFC.DTOs
             public string StatusDisplay => Status switch
             {
                 OrderStatus.Pending => "Chờ xử lý",
-                OrderStatus.Processing => "Đang xử lý",
-                OrderStatus.Shipped => "Đã giao",
+                OrderStatus.Confirmed => "Đã xác nhận",
                 OrderStatus.Completed => "Hoàn thành",
-                OrderStatus.Cancelled => "Đã hủy",
                 _ => "Không xác định"
             };
 
             public string StatusClass => Status switch
             {
                 OrderStatus.Pending => "warning",
-                OrderStatus.Processing => "info",
-                OrderStatus.Shipped => "primary",
+                OrderStatus.Confirmed => "info",
                 OrderStatus.Completed => "success",
-                OrderStatus.Cancelled => "danger",
                 _ => "secondary"
             };
         }
-
+        public class ProductDto
+        {
+            public decimal Id { get; set; }
+            public string Name { get; set; } = null!;
+            public string? Description { get; set; }
+            public decimal Price { get; set; }
+            public string? ImageUrl { get; set; }
+            public decimal? Inventory { get; set; }
+            public decimal? CategoryId { get; set; }
+            public string? CategoryName { get; set; }
+        }
         public class NewUserViewModel
         {
             public string Id { get; set; }
@@ -126,14 +132,12 @@ namespace TFC.DTOs
             public bool HasNextPage => CurrentPage < TotalPages;
 
             public List<SelectListItem> StatusOptions => new()
-    {
-        new SelectListItem { Value = "", Text = "Tất cả trạng thái" },
-        new SelectListItem { Value = OrderStatus.Pending.ToString(), Text = "Chờ xử lý" },
-        new SelectListItem { Value = OrderStatus.Processing.ToString(), Text = "Đang xử lý" },
-        new SelectListItem { Value = OrderStatus.Shipped.ToString(), Text = "Đã giao" },
-        new SelectListItem { Value = OrderStatus.Completed.ToString(), Text = "Hoàn thành" },
-        new SelectListItem { Value = OrderStatus.Cancelled.ToString(), Text = "Đã hủy" }
-    };
+            {
+                new SelectListItem { Value = "", Text = "Tất cả trạng thái" },
+                new SelectListItem { Value = OrderStatus.Pending.ToString(), Text = "Chờ xử lý" },
+                new SelectListItem { Value = OrderStatus.Confirmed.ToString(), Text = "Đã xác nhận" },
+                new SelectListItem { Value = OrderStatus.Completed.ToString(), Text = "Hoàn thành" },
+            };
         }
 
         public class OrderManagementViewModel
@@ -150,20 +154,16 @@ namespace TFC.DTOs
             public string StatusDisplay => Status switch
             {
                 OrderStatus.Pending => "Chờ xử lý",
-                OrderStatus.Processing => "Đang xử lý",
-                OrderStatus.Shipped => "Đã giao",
+                OrderStatus.Confirmed => "Đã xác nhận",
                 OrderStatus.Completed => "Hoàn thành",
-                OrderStatus.Cancelled => "Đã hủy",
                 _ => "Không xác định"
             };
 
             public string StatusClass => Status switch
             {
                 OrderStatus.Pending => "warning",
-                OrderStatus.Processing => "info",
-                OrderStatus.Shipped => "primary",
+                OrderStatus.Confirmed => "info",
                 OrderStatus.Completed => "success",
-                OrderStatus.Cancelled => "danger",
                 _ => "secondary"
             };
         }
@@ -186,21 +186,17 @@ namespace TFC.DTOs
             public string StatusDisplay => Status switch
             {
                 OrderStatus.Pending => "Chờ xử lý",
-                OrderStatus.Processing => "Đang xử lý",
-                OrderStatus.Shipped => "Đã giao",
+                OrderStatus.Confirmed => "Đã xác nhận",
                 OrderStatus.Completed => "Hoàn thành",
-                OrderStatus.Cancelled => "Đã hủy",
                 _ => "Không xác định"
             };
 
             public List<SelectListItem> StatusOptions => new()
-    {
-        new SelectListItem { Value = OrderStatus.Pending.ToString(), Text = "Chờ xử lý" },
-        new SelectListItem { Value = OrderStatus.Processing.ToString(), Text = "Đang xử lý" },
-        new SelectListItem { Value = OrderStatus.Shipped.ToString(), Text = "Đã giao" },
-        new SelectListItem { Value = OrderStatus.Completed.ToString(), Text = "Hoàn thành" },
-        new SelectListItem { Value = OrderStatus.Cancelled.ToString(), Text = "Đã hủy" }
-    };
+            {
+                new SelectListItem { Value = OrderStatus.Pending.ToString(), Text = "Chờ xử lý" },
+                new SelectListItem { Value = OrderStatus.Pending.ToString(), Text = "Đã xác nhận" },
+                new SelectListItem { Value = OrderStatus.Completed.ToString(), Text = "Hoàn thành" },
+            };
         }
 
         public class CustomerInfoViewModel
@@ -255,14 +251,11 @@ namespace TFC.DTOs
             public string DateLabel => Date.ToString("dd/MM");
         }
 
-        // Enums
         public enum OrderStatus
         {
-            Pending = 0,      // Chờ xử lý
-            Processing = 1,   // Đang xử lý
-            Shipped = 2,      // Đã giao
-            Completed = 3,    // Hoàn thành
-            Cancelled = 4     // Đã hủy
+            Pending = 0,       // Chờ xử lý
+            Confirmed = 1,    // Đã xác nhận 
+            Completed = 2    // Hoàn thành
         }
     }
 }
